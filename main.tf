@@ -1,91 +1,194 @@
-resource "aws_key_pair" "mykey" {
-key_name = "tf-key-pair"
-public_key = tls_private_key.rsa.public_key_openssh
+resource "aws_vpc" "vpc" {
+  cidr_block = "10.0.0.0/16"
+  instance_tenancy = "default"
+  enable_dns_hostnames = true
+  enable_dns_support = true
+  tags = {
+    "Name" = "my_vpc"
+  }
 }
-resource "tls_private_key" "rsa" {
-algorithm = "RSA"
-rsa_bits  = 4096
+
+
+# Use Data Source to get all Avalablility Zones in the region
+data "aws_availability_zones" "available_zones" {}
+
+
+/* This code leverages the aws_availability_zones data source,
+  allowing you to dynamically fetch the list of Availability Zones available in your selected AWS region.
+  By doing so, you can design your infrastructure to be resilient across multiple AZs,
+   enhancing its fault tolerance and ensuring high availability */
+
+# Create Public Subnet AZ1
+resource "aws_subnet" "public_subnet_az1" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.public_subnet_az1_cidr
+  availability_zone       = data.aws_availability_zones.available_zones.names[0]
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "Public Subnet AZ1"
+  }
 }
-resource "local_file" "tf-key" {
-content  = tls_private_key.rsa.private_key_pem
-filename = "tf-key-pair"
+
+# Create Public Subnet AZ2
+resource "aws_subnet" "public_subnet_az2" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.public_subnet_az2_cidr
+  availability_zone       = data.aws_availability_zones.available_zones.names[1]
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "Public Subnet AZ2"
+  }
 }
-resource "aws_vpc" "myvpc" {
- cidr_block = var.cidr
-}
-resource "aws_subnet" "sub1" {
- vpc_id                  = aws_vpc.myvpc.id
- cidr_block              = "10.0.0.0/24"
- availability_zone       = "ap-south-1a"
- map_public_ip_on_launch = true
-}
+
 resource "aws_internet_gateway" "igw" {
- vpc_id = aws_vpc.myvpc.id
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "VPC-IGW"
+  }
 }
-resource "aws_route_table" "RT" {
- vpc_id = aws_vpc.myvpc.id
- route {
-   cidr_block = "0.0.0.0/0"
-   gateway_id = aws_internet_gateway.igw.id
- }
+
+# Create Public Route Table and add Public Route
+resource "aws_route_table" "public-route-table" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "Public Route Table"
+  }
 }
-resource "aws_route_table_association" "rta1" {
- subnet_id      = aws_subnet.sub1.id
- route_table_id = aws_route_table.RT.id
+
+# Associate Public Subnet AZ1 to "Public Route Table"
+resource "aws_route_table_association" "public-subnet-az1-rt-association" {
+  subnet_id      =  aws_subnet.public_subnet_az1.id
+  route_table_id =  aws_route_table.public-route-table.id
 }
-resource "aws_security_group" "webSg" {
- name   = "web"
- vpc_id = aws_vpc.myvpc.id
- ingress {
-   description = "HTTP from VPC"
-   from_port   = 80
-   to_port     = 80
-   protocol    = "tcp"
-   cidr_blocks = ["0.0.0.0/0"]
- }
- ingress {
-   description = "SSH"
-   from_port   = 22
-   to_port     = 22
-   protocol    = "tcp"
-   cidr_blocks = ["0.0.0.0/0"]
- }
- egress {
-   from_port   = 0
-   to_port     = 0
-   protocol    = "-1"
-   cidr_blocks = ["0.0.0.0/0"]
- }
- tags = {
-   Name = "Web-sg"
- }
+
+# Associate Public Subnet AZ2 to "Public Route Table"
+resource "aws_route_table_association" "public-subnet-2-rt-association" {
+  subnet_id      =  aws_subnet.public_subnet_az2.id
+  route_table_id = aws_route_table.public-route-table.id
 }
-resource "aws_instance" "server" {
- ami                    = "ami-007020fd9c84e18c7"
- instance_type          = "t2.micro"
- key_name      = aws_key_pair.mykey.key_name
- vpc_security_group_ids = [aws_security_group.webSg.id]
- subnet_id              = aws_subnet.sub1.id
- connection {
-   type        = "ssh"
-   user        = "ubuntu"  # Replace with the appropriate username for your EC2 instance
-   private_key =  "tf-key-pair"
-   host        = self.public_ip
- }
+
+# Create Private Subnet AZ1
+resource "aws_subnet" "private_subnet_az1" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.private_subnet_az1_cidr
+  availability_zone       = data.aws_availability_zones.available_zones.names[0]
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "Private Subnet AZ1"
+  }
 }
- # File provisioner to copy a file from local to the remote EC2 instance
-#  provisioner "file" {
-#    source      = "app.py"  # Replace with the path to your local file
-#    destination = "/home/ubuntu/app.py"  # Replace with the path on the remote instance
-#  }
-#  provisioner "remote-exec" {
-#    inline = [
-#      "echo 'Hello from the remote instance'",
-#      "sudo apt update -y",  # Update package lists (for ubuntu)
-#      "sudo apt-get install -y python3-pip",  # Example package installation
-#      "cd /home/ubuntu",
-#      "sudo pip3 install flask",
-#      "sudo python3 app.py &",
-#    ]
-#  }
-# }
+
+# Create Private Subnet AZ2
+resource "aws_subnet" "private_subnet_az2" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.private_subnet_az2_cidr
+  availability_zone       = data.aws_availability_zones.available_zones.names[1]
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "Private Subnet AZ2"
+  }
+}
+
+# Here is the configuration for creating NAT gateways:
+
+# Allocate Elastic IP. (This EIP will be used for the Nat-Gateway in the Public Subnet AZ1)
+resource "aws_eip" "eip_for_nat_gateway_az1" {
+  domain    = "vpc"
+
+  tags   = {
+    Name = "Nat Gateway AZ1 EIP"
+  }
+}
+
+# Allocate Elastic IP. (This EIP will be used for the Nat-Gateway in the Public Subnet AZ2)
+resource "aws_eip" "eip_for_nat_gateway_az2" {
+  domain    = "vpc"
+
+  tags   = {
+    Name = "Nat Gateway AZ2 EIP"
+  }
+}
+
+# Create Nat Gateway in Public Subnet AZ1
+resource "aws_nat_gateway" "nat_gateway_az1" {
+  allocation_id = aws_eip.eip_for_nat_gateway_az1.id
+  subnet_id     = aws_subnet.public_subnet_az1.id
+
+  tags   = {
+    Name = "Nat Gateway AZ1"
+  }
+
+  # to ensure proper ordering, it is recommended to add an explicit dependency
+  depends_on = [aws_internet_gateway.igw]
+}
+
+# Create Nat Gateway in Public Subnet AZ2
+resource "aws_nat_gateway" "nat_gateway_az2" {
+  allocation_id = aws_eip.eip_for_nat_gateway_az2.id
+  subnet_id     = aws_subnet.public_subnet_az2.id
+
+  tags   = {
+    Name = "Nat Gateway AZ2"
+  }
+
+  # to ensure proper ordering, it is recommended to add an explicit dependency on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.igw]
+}
+
+#Create Private Route Table for AZ1 and Add a Route Through NAT Gateway AZ1
+
+
+# Create Private Route Table AZ1 and add route through Nat Gateway AZ1
+resource "aws_route_table" "private_route_table_az1" {
+  vpc_id            = aws_vpc.vpc.id
+
+  route {
+    cidr_block      = "0.0.0.0/0"
+    nat_gateway_id  = aws_nat_gateway.nat_gateway_az1.id
+  }
+
+  tags   = {
+    Name = "Private Route Table AZ1"
+  }
+}
+# Associate Private Subnet AZ1 with Private Route Table AZ1
+
+# Associate Private Subnet AZ1 with Private Route Table AZ1
+resource "aws_route_table_association" "private_subnet_az1_route_table_az1_association" {
+  subnet_id         = aws_subnet.private_subnet_az1.id
+  route_table_id    = aws_route_table.private_route_table_az1.id
+}
+
+# Create Private Route Table for AZ2 and Add a Route Through NAT Gateway AZ2
+
+# Create Private Route Table AZ2 and add route through Nat Gateway AZ2
+resource "aws_route_table" "private_route_table_az2" {
+  vpc_id            = aws_vpc.vpc.id
+
+  route {
+    cidr_block      = "0.0.0.0/0"
+    nat_gateway_id  = aws_nat_gateway.nat_gateway_az2.id
+  }
+
+  tags   = {
+    Name = "Private Route Table AZ2"
+  }
+}
+
+# Associate Private Subnet AZ2 with Private Route Table AZ2
+
+# Associate Private Subnet AZ2 with Private Route Table AZ2
+resource "aws_route_table_association" "private_subnet_az2_route_table_az2_association" {
+  subnet_id         = aws_subnet.private_subnet_az2.id
+  route_table_id    = aws_route_table.private_route_table_az2.id
+}
