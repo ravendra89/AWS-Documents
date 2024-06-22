@@ -1,0 +1,50 @@
+Step 1: Update Your Server
+
+
+sudo apt-get update
+sudo apt-get upgrade
+
+Step 2: Install mod_ssl
+The next step is to install the mod_ssl module. This can be done using the following command:
+
+sudo apt-get install libapache2-mod-ssl
+
+This command will install the mod_ssl module along with its dependencies.
+
+Step 3: Enable mod_ssl
+After the installation is complete, you need to enable the mod_ssl module. This can be done using the following command:
+
+sudo a2enmod ssl
+
+Step 4: Set Up SSL Certificate
+
+Once the mod_ssl module is enabled, the next step is to set up an SSL certificate. 
+For the purpose of this tutorial, we will create a self-signed certificate.
+This type of certificate is fine for testing purposes or for internal use, but for a public website, you should consider getting a certificate signed by a trusted certificate authority.
+
+You can create a self-signed certificate using the openssl command as follows:
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+
+Note:- replace selfsigned name and mention the name as our choice
+
+This command will create a new RSA key and a self-signed certificate valid for 365 days. 
+The key will be stored in the file /etc/ssl/private/apache-selfsigned.key and the certificate in the file /etc/ssl/certs/apache-selfsigned.crt.
+
+Step 5: Configure Apache to Use SSL
+
+First, open the file with a text editor. In this example, we’ll use nano:
+
+sudo nano /etc/apache2/sites-available/default-ssl.conf
+In this file, look for the lines that start with SSLCertificateFile and SSLCertificateKeyFile. Replace them with the following lines:
+
+SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+
+Step 6: Enable the SSL Site
+The next step is to enable the SSL site. This can be done using the a2ensite command as follows:
+sudo a2ensite default-ssl
+Step 7: Restart Apache
+sudo systemctl restart apache2
+
+

@@ -1,0 +1,51 @@
+# HTTP header---
+
+
+HTTP header provide required information about the request or response, or about the object sent in the message body. There are four types of HTTP message headers:
+
+1) General-header: These header fields have general applicability for both request and response messages.
+
+2) Client Request-header: These header fields have applicability only for request messages.
+
+3) Server Response-header: These header fields have applicability only for response messages.
+
+4) Entity-header: These header fields define meta information about the entity-body or, if no body is present, about the resource identified by the request.
+
+
+# HTTP headers with Application Load Balancers-----
+
+HTTP requests and HTTP responses use header fields to send information about the HTTP messages. HTTP headers are added automatically.
+Header fields are colon-separated name-value pairs that are separated by a carriage return (CR) and a line feed (LF). 
+A standard set of HTTP header fields is defined in RFC 2616, Message Headers. 
+There are also non-standard HTTP headers available that are automatically added and widely used by the applications. 
+
+>> Some of the non-standard HTTP headers have an X-Forwarded prefix.
+   Application Load Balancers support X-Forwarded headers that we used to route/forward request from HTTP to HTTPS to secure the client request. 
+
+>> The X-Forwarded-For request header helps us to identify the IP address of a client when we use an HTTP or HTTPS load balancer.
+ Because load balancers intercept traffic between clients and servers.
+
+# Improving security by enabling security specific headers--
+
+1) To improve the security of your content, you can use HTTP security headers that are natively supported by the HTTP protocol and most modern browsers. 
+   These security headers tell the browser how to behave when handling website content. They can do things such as enforced communications over HTTPS.
+
+2) Security headers are commonly implemented using the web application configuration.
+ but alternatively we can configure CloudFront to add those security response headers for our application if required.
+CloudFront provides this configuration through a response headers policy, and it comes with some managed policies that already has security headers such as-
+Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options.
+
+3) Another consideration for enhanced security using HTTP headers is the appropriate configuration of Cross-origin resource sharing (CORS).
+ In modern applications, the use of cross-domain resources is a necessary. The default restriction from browsers that only allows content from the same origin is impossible. 
+To allow requests that have different origins (domain, protocol, or port), CORS must be enabled.
+
+@ A number of HTTP headers relate to CORS, but two response headers are most important for security:
+
+>> Access-Control-Allow-Origin- specifies which domains can access a site.
+
+>> Access-Control-Allow-Methods- specifies which HTTP request methods (GET, PUT, DELETE, and others) can be used to access resources.
+
+CloudFront support the configuration of these CORS response headers with the response headers policy.
+You can choose to use managed policies, or you can customize CORS behavior to allow only a specific origin web site to use the resources that you’re sharing.
+
+

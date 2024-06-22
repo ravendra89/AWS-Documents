@@ -1,0 +1,35 @@
+# Implementing High Availability And Fault Tolerance On AWS---
+@ Below services provide High Availability And Fault Tolerance in AWS:
+
+1) Auto-scaling: With the help of this service, computing resources can be automatically scaled to meet demand. 
+   It makes sure that your apps always have the resources they need, altering capacity to handle different workloads.
+
+2) Elastic Load Balancing: When it comes to dividing up incoming application traffic among several targets, such as Amazon EC2 instances or containers, ELB is essential. 
+   Scalability and fault tolerance are improved by ELB's equitable traffic distribution, which keeps no single instance or resource from overloading. 
+
+3) Amazon RDS Multi-AZ (Availability Zone): Multi-AZ deployments, which automatically replicate databases across various availability zones, 
+are a feature of Amazon Relational Database Service. By offering redundancy and failover support, this feature improves HA.
+ RDS minimizes disruptions and guarantees ongoing database availability in the case of a primary database failure by smoothly switching to a standby replica.
+
+4) Amazon S3 (Simple Storage Service): Amazon S3 makes a substantial contribution to both HA and FT with its highly available storage solution.
+ By duplicating data across several locations within a region, guarding against potential hardware failures, and offering reliable data access, it assures data durability and availability.
+
+5) Amazon Route 53: Route 53 is a scalable and dependable domain name system (DNS) that is essential to providing applications with high availability and fault tolerance. 
+It successfully directs end-user requests to the endpoints that are most available, enabling a seamless user experience even in the event of infrastructure outages.
+
+6) Amazon CloudWatch for extensive monitoring and alerting.
+
+# Implementing High Availability And Fault Tolerance Strategies On Ec2 instance--
+
+1. Launch EC2 Instances:
+Launch EC2 instances across several Availability Zones (AZs). Make sure your web application is hosted on instances that have the same configuration.
+Set up security groups to permit incoming connections to the web server instances on ports 80 or 443 (HTTP/HTTPS).
+2. Elastic Load Balancer:
+ Establish an Elastic Load Balancer (ELB) and set it up such that incoming traffic is split among your EC2 instances.
+ Configure your EC2 instances' health checks with the ELB. This guarantees that traffic is only routed to healthy instances.
+3. Database Setup with Amazon RDS:
+To provide database redundancy across many AZs, create an Amazon RDS instance (e.g., MySQL, PostgreSQL) in Multi-AZ deployment mode.
+Set up backups, security groups, and database options based on the needs of your application.
+4. Implement Auto Scaling:
+  Create Auto Scaling groups for your Amazon EC2 instances. This enables automatic scaling to manage different workloads based on predetermined triggers (e.g., CPU use, traffic).
+  Define scaling policies to dynamically add or delete EC2 instances as demand changes.

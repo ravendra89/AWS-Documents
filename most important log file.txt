@@ -1,0 +1,3 @@
+How to check var log messages in Linux?
+Linux logs can be viewed with the command cd /var/log, then by typing the command ls to see the logs stored under this directory.
+ One of the most important logs to view is the syslog, which logs everything but auth-related messages.

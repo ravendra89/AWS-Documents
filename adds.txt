@@ -1,0 +1,80 @@
+## ADDS(Active directory domain services)- 
+* ADDS is a role,  we can use ADDS to manage complete  server environment with the  help of domain. 
+In adds feature one domain provide service to multiple network or server.
+OR
+# Active Directory Domain Services (AD DS) are the core functions in Active Directory that manage users and computers and allow sysadmins to organize
+the data into logical hierarchies. AD DS provides for security certificates, Single Sign-On (SSO), LDAP, and rights management.
+## ADDS Component---
+1- physical component-
+* Data store
+* Domain controllers
+* Global catalog server
+* RODC
+2- Logical component-
+* partitions
+* schema
+* Domains
+* Domain trees
+* Forests
+* sites
+* OUs
+## The Active directory schema acts as a blueprints for ADDS by defining the attributes and object classes such as-
+NOTE- Means i can do below configuration.
+
+ATTRIBUTES                          CLASSES
+* objectSID                        * USER
+* LOCATION                         * GROUP 
+* MANAGER                          * COMPUTER
+* DEPARTMENT                       * SITE
+
+## GLOBAL CATALOG SERVER-
+Global catalog create repository file, global catalog hosts a partial attribute set for other domains in the forest supports queries for objects
+throughout the forest.
+## DC( domain controller)-it is a root domain.
+## CDC(Child domain controller)- it is a backup server of main server.
+## GCDC( Grand child domain controller)-it is a member server of CDC.
+## ADC(Additional domain controller)- it is a coppy of main/root server.
+## RODC(Read only domain controller)- IN RODC server we can only read informtion of any server.
+## FOREST DOMAIN- It is a combination of complete server such as- DC,CDC,GCDC,ADC,RODC.
+
+## ADDS INSTALLATION ON WINDOWS SERVER 2016--( Configure our domain on windows server).
+* firstly configure ip on server- control panel-network and internet-network and sharing center-change adapter settings-then iv4 and configure ip.
+note- (ip, gateway and dns will be same)
+ Open server manager-manage-add role and features-next-role based or features based installation-next-select a server from the server pool-next-
+select server roles(adds)- add features-next-next-next-click on restart the destination server automatically if required-install-
+close-click on flag-click on promote this server to a domain controller-first option for ADC AND RODC, SECOND OPTION FOR CDC AND GCDC AND THIRD OPTION FOR
+NEW SERVER ESTABLISH- MENTION OUR DOMAIN IN THE BOX( globally unic name hota h  we can say FQDN) means we can register our domain in the windows server- 
+next- mention password-next-next-next-next-next-install.
+## NOW CREARE CDCOR GCDC OR ADS OR RODC ---
+* firstly configure ip on server- control panel-network and internet-network and sharing center-change adapter settings-then iv4 and configure ip.
+note- (ip, gateway and dns will be same)
+ Open server manager-manage-add role and features-next-role based or features based installation-next-select a server from the server pool-next-
+select server roles(adds)- add features-next-next-next-click on restart the destination server automatically if required-install-
+close-click on flag-click on promote this server to a domain controller-first option for ADC AND RODC, SECOND OPTION FOR CDC AND GCDC AND THIRD OPTION FOR
+NEW SERVER ESTABLISH-MENTION OUR DOMAIN IN THE BOX( globally unic name hota h  we can say FQDN) means we can register our domain in the windows server- 
+next-click on windows server technical preview- then select server for CDC on both box- mention password-next-next-next-next-next-install-tool-DNS-
+ click on computer name- forword lookup zone already configure hota h- click on reverse lookup zone- new zone-next-next-next.mention ip-next-
+allow on both nonsecure and secure dynamic updates-next-finish- now click on reverse lookup zones-click on  first file (0.0.10.in-addr-click on new PTR-
+CLICK ON FORWORD OF TWO TIMES- open our domain name-select our computer( server name)-ok- ip resolved on uper side- now verify DNS is working or not-
+open cmd - type nslookup ip/domain name and check( if everything is right then dns is working- now open other server -
+congigure ip( gateway adds(DC) servOTHer ka dena h same for DNS)-now open CMD and ping with adds server IP- if not reachable then off the firewall on both server-
+now click on machine-network-adapter-select bridge adapter or host only adapter( if both side is virtual box) on both server- now both server show the reply.
+
+                                         ## BOTH SERVER ARE CONNECTED ##
+
+## Now make CDC OR ADS OR RODC OR GCDC WHAT EVER I WANT---
+Open other server 2008,2012 etc. (jis par configure karna h)-server manager-role-add role- next- select adds-click on add required features-next-
+next-install-close-click on adds- run the adds-next-next-select any one fOR ADS,CDC,GCDC( FOR ADS OR RODC SELECT FIRST AND FOR CDC AND GCDC SELECT SECOND-
+Next-type domain name-click on set- now dc server ki details mention karni h like domain name/administrator then password-ok-next- click on browse- select domain name-
+now type name according to me( its for cdc and gcdc)- next- next-next- ( ADS AND RODC ME NAME NAHI DENA PADTA)agar mai click nhi karunga to ADS banega- 
+if rodc me click karunga to rodc banega-next- now mention password (same server ka password)-next-click on reboot box-next- now we can check completed.
+## now dc server se ham control kar sakte h other server ko jisme configuration kiya h-- means dc server se user create kar sakta hu other server me-
+## how to create user-
+open DC server - server manager- tool-active directort user and computers-click on domain name- change domain-browse-click on domain and select our 
+created( ADS OR RODC OR CDC-GCDC SERVER)-ok- now open our created server-click on user and create the user--
+Now check-
+open other server- active directory user and computers-open our created server-user- and check created user.
+
+
+
+

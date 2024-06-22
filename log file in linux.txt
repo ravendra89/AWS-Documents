@@ -1,0 +1,3 @@
+Log files are a set of records that Linux maintains for the administrators to keep track of important events. 
+They contain messages about the server, including the kernel,
+ services and applications running on it. Linux provides a centralized repository of log files that can be located under the /var/log directory.

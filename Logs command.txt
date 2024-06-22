@@ -15,8 +15,14 @@ runlevel (to lvl 3) 3.10.0-1160.11.1 Sat Feb 13 19:55 - 20:04 (00:08)
 You can further correlate the reboot you want to diagnose with system messages.
 
 # For CentOS/RHEL systems, /var/log/messages 
+or /var/log/secure
 
 # Ubuntu/Debian systems, /var/log/syslog. 
+or
+/var/log/auth.log
 You can simply use the tail command or your favorite text editor to filter out or find specific data.
 
 this avove command we can be check such entries suggest a shutdown/reboot initiated by an administrator or root user.
+
+@@ note- cd /var/log
+        cat syslog or massage or etc

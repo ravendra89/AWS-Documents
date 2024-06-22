@@ -1,0 +1,39 @@
+# Ansible module commands-
+Note:- Some modules take no arguments--
+Example:-
+1) Ping the host server using module command-
+ ansible test -m ping
+
+2) install the package httpd
+ansible test -b -m yum -a "pkg=httpd state=present"
+
+3) update the package 
+ansible test -b -m yum -a "pkg=httpd state=latest"
+
+4) remove the package
+ansible test -b -m yum -a "pkg=httpd state=absent" 
+
+5)start the package
+ansible test -b -m service -a "name=httpd state=started" 
+
+6) create user in host server-
+ansible test -b -m user -a "name=newuser"
+7) check user from host server
+cat /etc/passwd
+
+7) Copy file from ansible server to host server, which are under test group
+ansible test -b -m copy -a "src=file1 dest=/tmp"
+
+8) Copy file from ansible server to last host server, which are under test group
+ansible test[-1] -b -m copy -a "src=file1 dest=/tmp"
+
+9) Copy file from ansible server to first host server, which are under test group
+ansible test[0] -b -m copy -a "src=file1 dest=/tmp"
+
+
+# setup module commands-
+1) check complete current details of host servers-
+ ansible test -m setup
+
+2) check host server IP details using setup module command-
+ansible test -m setup -a "filter=*ipv4*"

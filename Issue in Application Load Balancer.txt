@@ -1,0 +1,62 @@
+# Issue in Application Load Balancer
+@ The following information can help you troubleshoot issues with your Application Load Balancer--
+
+1) Clients cannot connect to an internet-facing load balancer
+
+If the load balancer is not responding to requests, check for the following issues:
+
+>> Your internet-facing load balancer is attached to a private subnet
+   You must specify public subnets for your load balancer. A public subnet has a route to the Internet Gateway for your virtual private cloud (VPC).
+
+>> A security group or network ACL does not allow traffic
+  The security group for the load balancer and any network ACLs for the load balancer subnets must allow inbound traffic from the clients and outbound traffic to the clients on the listener ports.
+
+2)  Requests sent to a custom domain aren't received by the load balancer---
+
+If the load balancer is not receiving requests sent to a custom domain, check for the following issues:
+
+The custom domain name does not resolve to the load balancer IP address
+Confirm what IP address the custom domain name resolves to using a command line interface.
+
+Linux, macOS, or Unix – You can use the dig command within Terminal. Ex.dig example.com
+
+Windows – You can use the nslookup command within Command Prompt. Ex.nslookup example.com
+
+Confirm what IP address the load balancers DNS name resolves to using a command line interface.
+
+Compare the results of the two outputs. The IP addresses must match.
+
+3) The load balancer generates an HTTP error--
+
+>> HTTP 400: Bad request
+>> HTTP 403: Forbidden
+You configured an AWS WAF web access control list (web ACL) to monitor requests to your Application Load Balancer and it blocked a request.
+>> HTTP 405: Method not allowed
+>> HTTP 408: Request timeout
+>> HTTP 502: Bad gateway
+>> HTTP 503: Service unavailable
+>> HTTP 504: Gateway timeout
+>> HTTP 507: Insufficient Storage
+The redirect URL is too long.
+
+
+
+
+
+4) A registered target is not in service---
+
+If a target is taking longer time to become Inservice state, it might be failing health checks. our target is not in service until it passes one health check.
+ For more information, see Health checks for your target groups.
+
+Verify that instance is failing health checks and then check for the following issues:
+>> A security group does not allow traffic
+The security group associated with an instance must allow traffic from the load balancer using the health check port and health check protocol.
+we can add a rule to the instance security group to allow all traffic from the load balancer security group.
+ Also, the security group for our load balancer must allow traffic to the instances.
+
+>> A network access control list (ACL) does not allow traffic
+
+The network ACL associated with the subnets for your instances must allow inbound traffic on the health check port and outbound traffic on the ephemeral ports (1024-65535).
+ The network ACL associated with the subnets for your load balancer nodes must allow inbound traffic on the ephemeral ports and outbound traffic on the health check and ephemeral ports.
+
+

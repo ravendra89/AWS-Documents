@@ -1,0 +1,24 @@
+
+Create an IAM role with S3 write access or admin access
+Map the IAM role to an EC2 instance
+Install AWS CLI in EC2 instance
+Run the AWS s3 cp command to copy the files to the S3 bucket
+
+# To List the S3 Bucket 
+aws s3 ls s3://<S3bucketName>
+
+# To copy the files from EC2 to S3
+aws s3 cp <Fully Qualified Local filename> s3://<S3BucketName>
+
+# To copy the files from S3 bucket to EC2 instance, 
+you have to follow the same steps except changing the source and destination on the Fourth Step
+Create an IAM role with S3 write access or admin access
+Map the IAM role to an EC2 instance
+Install AWS CLI in EC2 instance
+Run the AWS s3 cp command to copy the files from S3 to EC2
+
+# To copy the files from S3 to EC2
+aws s3 cp s3://<S3BucketName> <Fully Qualified Local filename/Directory>
+
+
+

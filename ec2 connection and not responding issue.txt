@@ -1,0 +1,61 @@
+# how do i troubleshoot if ec2 instance is not responding.....
+
+AWS EC2 server becomes unresponsive due to several reasons. We need to know the scenarios to handle it properly.
+
+1) An AWS EC2 server becomes unresponsive when the load is more than 100% for a very long time.
+ It can happen because of the abnormality in the app/database/web services you deployed on the AWS EC2 server. You cannot connect to AWS EC2 server via SSH during this time.
+
+>> Go to AWS EC2 management console and try rebooting the server, If a reboot didn't work, try stopping the AWS EC2 server and wait for some time. Then, try starting it again.
+ It is the only way to bring back an overloaded AWS EC2 server to online.
+
+2) IF our ec2 instance are running on default tenancy hardware then Mostly, Due to hardware failure, 
+AWS migrates our EC2 virtual machine server from one hardware rack to another without notifying you.
+ The AWS EC2 server becomes unresponsive (5-10 minutes) on that time and then comes back online. Sometimes, it won't come back online at all.
+ we can do nothing about it, but we can contact AWS customer support for the solution.
+
+
+# Troubleshoot instance launch issues---
+Invalid device name
+Instance limit exceeded
+Insufficient instance capacity
+The requested configuration is currently not supported.
+Insufficient permissions
+
+# Connection problems and errors with ec2 instance----
+@ Common causes for connection issues..............
+1) Verify and use correct username for your instance
+2) Verify that our security group rules allow traffic
+3) Verify that  instance is ready--
+   Verify the following:
+In the Instance state column, verify that your instance is in the running state.
+In the Status check column, verify that your instance has passed the two status checks.
+
+@ Error connecting to our instance: Connection timed out---
+
+1) Check  security group rules.
+2) Check the route table for the subnet.
+3) Check the network access control list (ACL) for the subnet.
+4) Check the CPU load on your instance; the server may be overloaded.
+
+@ Error: Unprotected private key file----
+ private key file must be protected from read and write operations from any other users. 
+If our private key can be read or written by anyone  then SSH ignores our key and we see the Unprotected private key file error--
+
+note:- private key .ssh/my_private_key.pem with file permissions of 777, which allow anyone to read or write to this file. 
+This permission level is very insecure, and so SSH ignores this key.
+
+>> If you are connecting from macOS or Linux, run the following command to fix this error, substituting the path for your private key file.
+
+ chmod 400 .ssh/my_private_key.pem
+
+
+
+# host key not found during connecting an instance--
+reason--
+1) private key is not correct
+2) specifying server user name is wrong
+
+# Below ways to connect linux ec2 instance--
+SSH client
+EC2 Instance Connect
+AWS Systems Manager Session Manager

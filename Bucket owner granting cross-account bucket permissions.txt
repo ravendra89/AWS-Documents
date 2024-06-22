@@ -1,0 +1,138 @@
+# Bucket owner granting cross-account bucket permissions:-
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html
+
+An AWS account—for example, Account A—can grant another AWS account, Account B, permission to access its resources such as buckets and objects. 
+Account B can then delegate those permissions to users in its account. In this example scenario, 
+a bucket owner grants cross-account permission to another account to perform specific bucket operations.
+
+Note:- Account A can also directly grant a user in Account B permissions using a bucket policy. 
+      But the user will still need permission from the parent account, Account B, to which the user belongs, even if Account B does not have permissions from Account A.
+      As long as the user has permission from both the resource owner and the parent account, the user will be able to access the resource.
+
+1) Account A administrator user attaches a bucket policy granting cross-account permissions to Account B to perform specific bucket operations.
+
+   Note that administrator user in Account B will automatically inherit the permissions.
+
+2) Account B administrator user attaches user policy to the user delegating the permissions it received from Account A.
+
+3) User in Account B then verifies permissions by accessing an object in the bucket owned by Account A.
+
+Step 0: Preparing for the walkthrough:-
+
+Make sure We have two AWS accounts and that each account has one administrator user.
+
+
+Using Account A credentials, sign in to the IAM console to create the administrator user:
+Create user AccountAadmin and note down the security credentials. 
+
+Grant AccountAadmin administrator privileges by attaching a user policy giving full access.
+
+Repeat the preceding step using Account B credentials and create administrator user AccountBadmin.
+
+Step 1: Do the Account A tasks:-
+1) Create a bucket
+2) Attach a bucket policy to grant cross-account permissions to Account B
+
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Sid": "Example permissions",
+         "Effect": "Allow",
+         "Principal": {
+            "AWS": "arn:aws:iam::AccountB-ID:root"
+         },
+         "Action": [
+            "s3:GetLifecycleConfiguration",
+            "s3:ListBucket"
+         ],
+         "Resource": [
+            "arn:aws:s3:::DOC-EXAMPLE-BUCKET"
+         ]
+      }
+   ]
+}
+
+3) Verify Account B (and thus its administrator user) can perform the operations:-
+(a) Using the AWS CLI
+
+aws s3 ls s3://DOC-EXAMPLE-BUCKET --profile AccountBadmin
+aws s3api get-bucket-lifecycle-configuration --bucket DOC-EXAMPLE-BUCKET --profile AccountBadmin
+
+
+(b) Using the AWS Tools for Windows PowerShell
+
+get-s3object -BucketName DOC-EXAMPLE-BUCKET -StoredCredentials AccountBadmin 
+get-s3bucketlifecycleconfiguration -BucketName DOC-EXAMPLE-BUCKET -StoredCredentials AccountBadmin
+
+
+
+Step 2: Do the Account B tasks:-
+
+1) Sign in to the AWS Management Console
+2) Create user Dave in Account B
+3) Delegate permissions to user Dave
+
+Create an inline policy for the user Dave by using the following policy. we will need to update the policy by providing your bucket name.
+It is assumed you are signed in to the console using AccountBadmin user credentials.
+
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Sid": "Example",
+         "Effect": "Allow",
+         "Action": [
+            "s3:ListBucket"
+         ],
+         "Resource": [
+            "arn:aws:s3:::DOC-EXAMPLE-BUCKET"
+         ]
+      }
+   ]
+}
+
+
+4) Test permissions:-
+
+Now Dave in Account B can list the contents of DOC-EXAMPLE-BUCKET owned by Account A. You can verify the permissions using either of the following procedures.
+
+@ Test using the AWS CLI
+  (1) Add the UserDave profile to the AWS CLI config file.
+
+aws configure --profile Dave
+aws_access_key_id = access-key
+aws_secret_access_key = secret-access-key
+region = us-east-1
+
+(2) At the command prompt, enter the following AWS CLI command to verify Dave can now get an object list from the DOC-EXAMPLE-BUCKET owned by Account A.
+  aws s3 ls s3://DOC-EXAMPLE-BUCKET --profile UserDave
+
+Dave does not have any other permissions. So if he tries any other operation—for example, the following get bucket lifecycle configuration—Amazon S3 returns permission denied.
+
+aws s3api get-bucket-lifecycle-configuration --bucket DOC-EXAMPLE-BUCKET --profile UserDave
+
+@ Test using AWS Tools for Windows PowerShell
+
+(1) Store Dave's credentials as AccountBDave
+
+set-awscredentials -AccessKey AccessKeyID -SecretKey SecretAccessKey -storeas AccountBDave
+
+(2) Try the List Bucket command.
+
+get-s3object -BucketName DOC-EXAMPLE-BUCKET -StoredCredentials AccountBDave
+
+
+Dave does not have any other permissions. So if he tries any other operation—for example, the following get bucket lifecycle configuration—Amazon S3 returns permission denied.
+
+
+get-s3bucketlifecycleconfiguration -BucketName DOC-EXAMPLE-BUCKET -StoredCredentials AccountBDave
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+# GIT QUESTION- What are the steps to unstage files and discard changes in the working directory
+To unstage a file(which is not yet committed but in staging stage); command 'git reset <file-name>'  is used. After using 'git reset HEAD myfile.txt' command; 'git status' command won't show myfile.txt within the list of files unfinished to commit, currently it'll be displayed below the list of the unstage/untracked files.
+
+Now to discard the changes('myfile.txt') in working directory; command 'git checkout -- <file-name>' is used. After using 'git checkout -- myfile.txt' command; 
+'git status' command will not show myfile.txt in the list of unstage/untracked files as this file 'myfile.txt' will be replaced with the last committed version from the repository.
+
+# What are the real time challenges faced while working with git jenkins docker and ansible in our project
+
+It depends on your use case. How we are using the tools, it depends on that. It is not like that some challenges are fixed.
+ When we work on a real project, then we may face some problems. Then we try to find a solution on how to solve the issue. 
+For example, in automation, we can perform a task in a simple Jenkins job. But in some use cases, we need to use Pipeline.
+
+# CI CD Build failure in production, why ?
+we check logs/console out put and resolve the issue but if we don't have permission to check the log then we can tell below given reason-
+
+1) might be production server is down
+
+2) production server is getting update
+
+solution- we can perform monthly update--os patching
+3) might be deployed wrong git branch
+
+4) might be developement, QA, testing, production server are not in same configuration
+
+
+
+# Can Jenkins run several jobs in the same time?
+Yes it's possible. Doc: If this option is checked, 
+Jenkins will schedule and execute multiple builds concurrently (provided that you have sufficient executors and incoming build requests).
+

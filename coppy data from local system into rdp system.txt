@@ -1,0 +1,2 @@
+rdp-show option-local resources-click on printer and clickboard-click on more -click on drive-choose and one drive-ok
+-connect to rdp -go to this pc- then will show our coppy drive-now we can coppy our file

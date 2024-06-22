@@ -1,0 +1,11 @@
+- hosts: all
+  become: true
+  tasks:
+  - name: delete old deployment
+    command: Kubectl  delete -f /home/ubuntu/deployment.yml
+  - name: delete old service 
+    command: Kubectl  delete -f /home/ubuntu/service.yml
+  - name:  create new deployment
+    Kubectl apply -f /home/ubuntu/deployment.yml   # deployment directory path can be any other. i.e- our deployment file location
+  - name:  create new service
+    Kubectl apply -f /home/ubuntu/service.yml      # service directory path can be any other. i.e- our service file location

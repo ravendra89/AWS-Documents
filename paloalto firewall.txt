@@ -1,0 +1,5 @@
+## Palo alto --
+@ it is a firewall, paloalto network offers an enterprise cybersecurity platform which provides network security, 
+cloud security, endpoint protection, and various cloud delivered security services.
+
+Paloalto firewall have the ability to monitor and control the application and protect from malicious internet traffic.

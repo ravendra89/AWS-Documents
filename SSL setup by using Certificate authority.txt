@@ -1,0 +1,178 @@
+# Install an SSL Certificate from a  Certificate Authority( ssl certificate provider)
+
+1) check openssl version
+@ If required, then install it using below commands
+
+sudo apt-get install libapache2-mod-ssl
+sudo a2enmod ssl
+
+2) create directory
+
+mkdir /etc/myssl
+
+3) Generating a CSR and Private Key on server
+
+openssl req -newkey rsa:2048 -nodes -keyout /etc/myssl/myserver.key -out /etc/myssl/myserver.csr
+Note:- /etc/myssl >> my directory
+
+Note:- we can replace myserver from .ke and .csr and mention our domain name >> example.com
+
+@ Mention the below details-
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:New York
+Locality Name (eg, city) []:New York
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:My Company
+Organizational Unit Name IT ( any department)
+Common Name (e.g. server FQDN or YOUR name) []:example.com
+Email Address []:example@example.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:  (Leave this)
+An optional company name []: (Leave this)
+
+@ to view our private.key and csr 
+ls
+cat filename
+
+4) Purchasing and Obtaining a Certificate
+@ copy csr file key and go to certificate provider and register our csr key and get the ssl certificate
+
+Note: After Validation of CSR, Need to create CNAME record, CNAM VALUE WILL BE SHOW during validation of csr. Then go to domain provider and create cnam record and paste the copied cname value.
+
+After making a selection, We will need to upload the CSR that we generated in the server.
+ our CA provider will also likely have an “Approver” step, which will send a validation request email to an address in our domain’s WHOIS record 
+or to an administrator type address of the domain that you are getting a certificate for.
+
+@ After approving the certificate, the certificate will be emailed to the named administrator.
+Copy and save them to our server in the same location where we generated your private key and CSR. 
+Name the certificate with the domain name and a .crt extension, e.g. example.com.crt, and name the intermediate certificate intermediate.crt.
+Note: after completed validation, it will create 3 file
+crt certificate, intermediate certificate and root certificate
+
+
+OR
+
+1) go to server and go to /etc/myssl and create file
+certificate.crt
+copy crt key from provider and paste here
+2) create intermediate.crt folder and copy intermediate key from provider here
+
+Note:- If your CA returned only an intermediate certificate, you must create a single “chained” certificate file that contains your certificate and the CA’s intermediate certificates.
+
+Assuming your certificate file is called example.com.crt, you can use the cat command to append files together to create a combined file called example.com.chained.crt:
+
+cat example.com.crt intermediate.crt > example.com.chained.crt
+
+
+
+
+The certificate is now ready to be installed on our web server, but first,we may have to make some changes to your firewall.
+
+
+Step 5 – Updating your Firewall to Allow HTTPS
+@ For Apache
+Apache
+These are the steps to manually deploy an SSL certificate on Apache.
+
+Using nano or your favorite text editor, open your default Apache virtual host file for editing:
+
+sudo nano /etc/apache2/sites-available/000-default.conf
+Find the <VirtualHost *:80> entry and modify it so your web server will listen on port 443:
+
+/etc/apache2/sites-available/000-default.conf
+…
+<VirtualHost *:443>
+…
+Next, add the ServerName directive, if it doesn’t already exist:
+
+/etc/apache2/sites-available/000-default.conf
+…
+ServerName example.com
+…
+Then add the following lines to specify your certificate and key paths:
+
+/etc/apache2/sites-available/000-default.conf
+…
+SSLEngine on
+SSLCertificateFile /home/sammy/example.com.crt
+SSLCertificateKeyFile /home/sammy/example.com.key
+SSLCACertificateFile /home/sammy/intermediate.crt
+…
+At this point, your server is configured to listen on HTTPS only (port 443), so requests to HTTP (port 80) will not be served. 
+To redirect HTTP requests to HTTPS, add the following to the top of the file (substitute the name in both places):
+
+/etc/apache2/sites-available/000-default.conf
+<VirtualHost *:80>
+   ServerName example.com
+   Redirect permanent / https://example.com/
+</VirtualHost>
+…
+Save and close the file. If you are using nano, press Ctrl+X, then when prompted, Y and then Enter.
+
+Enable the Apache SSL module by running this command:
+
+sudo a2enmod ssl
+Now, restart Apache to load the new configuration and enable TLS/SSL over HTTPS.
+
+sudo systemctl restart apache2
+@ For Nginx
+sudo ufw status
+sudo ufw allow 'Nginx Full'
+sudo ufw delete allow 'Nginx HTTP'
+
+Step 6 – Installing a Certificate On Your Server
+After acquiring your certificate from the CA of your choice, we need to install it on our web server. 
+This involves adding a few SSL-related lines to your web server software configuration.
+
+@ For Nginx
+Nginx
+These are the steps to manually deploy an SSL certificate on Nginx.
+
+If your CA returned only an intermediate certificate, you must create a single “chained” certificate file that contains your certificate and the CA’s intermediate certificates.
+
+Assuming your certificate file is called example.com.crt, you can use the cat command to append files together to create a combined file called example.com.chained.crt:
+
+cat example.com.crt intermediate.crt > example.com.chained.crt
+Using nano or your favorite text editor, open your default Nginx server block file for editing:
+
+sudo nano /etc/nginx/sites-enabled/default
+Find the listen directive, and modify it to listen 443 ssl
+
+Find the listen directive, and modify it to listen 443 ssl:
+
+/etc/nginx/sites-enabled/default
+…
+server {
+    listen 443 ssl;
+…
+Next, find the server_name directive within that same server block, and make sure that its value matches the common name of your certificate. Also, add the ssl_certificate and ssl_certificate_key directives to specify the paths of your certificate and private key files:
+
+/etc/nginx/sites-enabled/default
+…
+    server_name example.com;
+    ssl_certificate /home/sammy/example.com.chained.crt;
+    ssl_certificate_key /home/sammy/example.com.key;
+…
+To allow only the most secure SSL protocols and ciphers, add the following lines to the file:
+
+/etc/nginx/sites-enabled/default
+…
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+…
+Finally, to redirect HTTP requests to HTTPS by default, you can add an additional server block at the top of the file:
+
+/etc/nginx/sites-enabled/default
+server {
+    listen 80;
+    server_name example.com;
+    rewrite ^/(.*) https://example.com/$1 permanent;
+}
+…
+Save and close the file. If you are using nano, press Ctrl+X, then when prompted, Y and then Enter.
+
+Before restarting Nginx, you can validate your configuration by using nginx -t:
+
+sudo systemctl restart nginx

@@ -1,0 +1,21 @@
+# Host pattern
+1) check all node details-
+ ansible all --list-hosts
+2) Check specific group information about host
+ ansible test --list-hosts
+
+3) Check first node details from the group
+ ansible test[0] --list-hosts
+4) Check second node details from the group
+ ansible test[1] --list-hosts
+5) Check third node details from the group
+ ansible test[1] --list-hosts
+and so on...........
+
+6) Check Last node details from the group
+ ansible test[-1] --list-hosts
+
+7) Check the node details with range from the group
+ ansible test[0:2] --list-hosts
+
+

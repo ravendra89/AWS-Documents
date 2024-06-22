@@ -1,0 +1,19 @@
+# AWS Command Line Interface support for multipart upload
+1) create iam use and assign s3 full access permission
+2) aws --version
+3) set aws credentials
+4) aws s3 ls to check bucket
+5)  aws s3 mb s3://bucket-name  to create bucket
+>> aws s3 ls to check bucket
+6) aws s3 ls s3://bucket-name to list the object in bucket
+7) go to particular local directory- run dir commands to check list of file-and run the below commands-
+>aws s3 sync . s3://bucketname
+
+@ aws s3 sync s3://bucket name . to coppy data from s3 to local pc in the current directory
+8) aws s3 rm s3://bucket-name/filename --recursive   to remove particular file from the s3 bucket
+OR
+aws s3 rm s3://bucket-name --recursive TO remove all object from the bucket
+
+9) aws s3 rb s3://bucket-name --force   to remove non empty bucket
+
+

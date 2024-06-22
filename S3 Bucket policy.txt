@@ -1,0 +1,220 @@
+# URL FOR BELOW DETAILS-
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html#example-bucket-policies-folders
+
+1) Restrict access to specific IP addresses:-
+Note:- When restricting access to a specific IP address, make sure that you also specify which VPC endpoints, VPC source IP addresses, or external IP addresses can access the S3 bucket. 
+Otherwise, you might lose access to the bucket if your policy denies all users from performing any S3 operations on objects in your bucket without the proper permissions already in place.
+
+@ This policy's Condition statement identifies 192.0.2.0/24 as the range of allowed Internet Protocol version 4 (IPv4) IP addresses.
+such as allow or deny access to all VPC subnet.
+
+{
+    "Version": "2012-10-17",
+    "Id": "S3PolicyId1",
+    "Statement": [
+        {
+            "Sid": "IPAllow",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::DOC-EXAMPLE-BUCKET",
+                "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
+            ],
+            "Condition": {
+                "NotIpAddress": {
+                    "aws:SourceIp": "192.0.2.0/24"
+                }
+            }
+        }
+    ]
+}
+
+
+
+If we specified Effect : Deny
+
+Then ye policy all source access ko block kar dega apart from this source IP- 112.34.266.123/32
+
+Note source IP should be always public IP
+
+If we specified Effect : Allow
+
+Then all sources access ko allow karega except from this source IP-112.34.266.123/32
+That means, If we specified Effect: Deny, then The following example denies all users from performing any Amazon S3 operations on objects in the specified buckets unless the request originates from the specified range of IP addresses
+
+@ NotAction with Deny
+
+We can use the NotAction element in a statement with "Effect": "Deny" to deny access to all of the listed resources except for the actions specified in the NotAction element.
+
+@ NotAction with Allow
+
+We can use the NotAction element in a statement with "Effect": "Allow" to provide access to all of the actions in an AWS service, except for the actions specified in NotAction.
+
+
+2) Allow both IPv4 and IPv6 addresses:-
+
+The following example bucket policy shows how to mix IPv4 and IPv6 address ranges to cover all of your organization's valid IP addresses.
+ The example policy allows access to the example IP addresses 192.0.2.1 and 2001:DB8:1234:5678::1 and denies access to the addresses 203.0.113.1 and 2001:DB8:1234:5678:ABCD::1.
+
+{
+    "Id": "PolicyId2",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowIPmix",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::DOC-EXAMPLE-BUCKET",
+                "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
+            ],
+            "Condition": {
+                "IpAddress": {
+                    "aws:SourceIp": [
+                        "192.0.2.0/24",
+                        "2001:DB8:1234:5678::/64"
+                    ]
+                },
+                "NotIpAddress": {
+                    "aws:SourceIp": [
+                        "203.0.113.0/24",
+                        "2001:DB8:1234:5678:ABCD::/80"
+                    ]
+                }
+            }
+        }
+    ]
+}
+
+
+3) Managing access based on HTTP or HTTPS requests:-
+
+@  Allow access to only HTTPS requests:-
+
+If we want to prevent potential attackers from manipulating network traffic, we can use HTTPS (TLS) to only allow encrypted connections
+ while restricting HTTP requests from accessing your bucket.
+
+the following example, the bucket policy explicitly denies HTTP requests:-
+{
+    "Version": "2012-10-17",
+    "Statement": [{
+        "Sid": "RestrictToTLSRequestsOnly",
+        "Action": "s3:*",
+        "Effect": "Deny",
+        "Resource": [
+            "arn:aws:s3:::DOC-EXAMPLE-BUCKET",
+            "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
+        ],
+        "Condition": {
+            "Bool": {
+                "aws:SecureTransport": "false"
+            }
+        },
+        "Principal": "*"
+    }]
+}
+@ Allow access to a specific HTTP referer:-
+
+Suppose that you have a website with the domain name www.example.com or example.com with links to photos and videos stored in your bucket named DOC-EXAMPLE-BUCKET.
+ By default, all Amazon S3 resources are private, so only the AWS account that created the resources can access them.
+
+To allow read access to these objects from your website, you can add a bucket policy that allows the s3:GetObject permission with a condition that the GET request must originate 
+from specific webpages. The following policy restricts requests by using the StringLike condition with the aws:Referer condition key.
+
+
+{
+  "Version":"2012-10-17",
+  "Id":"HTTP referer policy example",
+  "Statement":[
+    {
+      "Sid":"Allow only GET requests originating from www.example.com and example.com.",
+      "Effect":"Allow",
+      "Principal":"*",
+      "Action":["s3:GetObject","s3:GetObjectVersion"],
+      "Resource":"arn:aws:s3:::DOC-EXAMPLE-BUCKET/*",
+      "Condition":{
+        "StringLike":{"aws:Referer":["http://www.example.com/*","http://example.com/*"]}
+      }
+    }
+  ]
+}
+
+
+4) Managing user access to specific folders:-
+@ Grant users access to specific folders/object:-
+
+Note:- Suppose that you're trying to grant users access to a specific folder. If the IAM user and the S3 bucket belong to the same AWS account, then wou can use an IAM policy to grant
+       the user access to a specific bucket folder. With this approach, you don't need to update your bucket policy to grant access. 
+       You can add the IAM policy to an IAM role that multiple users can switch to.
+
+Note:- If the IAM identity and the S3 bucket belong to different AWS accounts, then you must grant cross-account access in both the IAM policy and the bucket policy.
+
+@ The following example bucket policy grants "JohnDoe" full console access to only his folder (home/JohnDoe/).
+ By creating a home folder and granting the appropriate permissions to your users, we can have multiple users share a single bucket. This policy consists of three Allow statements:
+
+1) AllowRootAndHomeListingOfCompanyBucket: Allows the user (JohnDoe) to list objects at the root level of the DOC-EXAMPLE-BUCKET bucket and in the home folder. This statement also allows the user to search on the prefix home/ by using the console.
+
+2) AllowListingOfUserFolder: Allows the user (JohnDoe) to list all objects in the home/JohnDoe/ folder and any subfolders.
+
+3) AllowAllS3ActionsInUserFolder: Allows the user to perform all Amazon S3 actions by granting Read, Write, and Delete permissions. Permissions are limited to the bucket owner's home folder.
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowRootAndHomeListingOfCompanyBucket",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::111122223333:user/JohnDoe"
+                ]
+            },
+            "Effect": "Allow",
+            "Action": ["s3:ListBucket"],
+            "Resource": ["arn:aws:s3:::DOC-EXAMPLE-BUCKET"],
+            "Condition": {
+                "StringEquals": {
+                    "s3:prefix": ["", "home/", "home/JohnDoe"],
+                    "s3:delimiter": ["/"]
+                }
+            }
+        },
+        {
+            "Sid": "AllowListingOfUserFolder",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::111122223333:user/JohnDoe"
+                ]
+            },
+            "Action": ["s3:ListBucket"],
+            "Effect": "Allow",
+            "Resource": ["arn:aws:s3:::DOC-EXAMPLE-BUCKET"],
+            "Condition": {
+                "StringLike": {
+                    "s3:prefix": ["home/JohnDoe/*"]
+                }
+            }
+        },
+        {
+            "Sid": "AllowAllS3ActionsInUserFolder",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::111122223333:user/JohnDoe"
+                ]
+            },
+            "Action": ["s3:*"],
+            "Resource": ["arn:aws:s3:::DOC-EXAMPLE-BUCKET/home/JohnDoe/*"]
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+

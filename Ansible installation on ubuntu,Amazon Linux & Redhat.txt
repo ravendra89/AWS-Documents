@@ -1,0 +1,184 @@
+# Python is required to install ansible because ansible is written in python language.
+
+Note:- Below file is not available in latest ubuntu and amazon linux 2023 OS. so need to change OS,
+ then install Ansible if we want to Run playbook via Ansible server-
+@ /etc/ansible/ansible.cfg
+@ /etc/ansible/hosts
+
+Note:- For Use Ansible via jenkins then there is no need to configure below file, 
+because, we need to run playbook via jenkins. but all ansible details should be present in git hub repository-
+
+@ /etc/ansible/ansible.cfg
+@ /etc/ansible/hosts
+# Ansible installation in Ubuntu OS-
+1) sudo apt update
+2) sudo apt install wget gpg
+3) sudo apt update
+4) sudo apt install software-properties-common
+5) sudo apt-add-repository --yes --update ppa:ansible/ansible
+6) sudo apt install ansible
+7) apt install python3-pip   (optional)
+# We can run below command and ignore given above command to install jenkins-
+  sudo apt install ansible
+7) ansible --version
+8) Go to Inventory file and create Group and mention node Private IP-
+Inventory file PATH  /etc/ansible/hosts
+
+# Open this file  vi /etc/ansible/hosts
+# create group Under "Ex 1: Ungrouped hosts"
+EX. 
+[Developers]
+172.31.32.205
+172.31.32.182
+Save and exit from vi editer
+Note:- We can add multiple node IP or create multiple Group 
+
+# If we have multiple remote server with different user name then above process will not work, because, in the /etc/ansible/ansible_config file, under the "remote_user" we can only specify 
+single user name.
+so if we have multiple remote server with different user name, then we need to make below entry in the "/etc/ansible/hosts" file----
+[demo]
+172.31.42.76 ansible_ssh_user=node ansible_ssh_pass="remote username password"
+172.31.39.171 ansible_ssh_user=node2 ansible_ssh_pass="remote username password"
+
+
+# TO Check the Inventory, run the following command-
+ansible-inventory --list -y
+9) Now modify the ansible main configuration file(/etc/ansible/ansible.cfg) so that hosts inventory (/etc/ansible/hosts) configuration file will be work-
+1) uncommented the "inventory" file
+2) Uncommented "sudo_user"
+3) remote_user = node   uncommented and mention the remote server username
+Now save and exit from the file 
+Note:- this process is depends on OS, if above entry is not showing in the (/etc/ansible/ansible.cfg) then follow the below process-
+
+@ We need to follow below process-
+
+1) Open "/etc/ansible/ansible.cfg" and copy below given command and run on ansible server with root user.
+ansible-config init --disabled > ansible.cfg
+ansible-config init --disabled -t all > ansible.cfg
+@ gitHub repository url For ansible.cfg file details
+https://github.com/ansible/ansible/blob/stable-2.9/examples/ansible.cfg
+2) then copy the given gitHub repository url and take the ansible.cfg default setting file and opent same (/etc/ansible/ansible.cfg) and paste the copies file and do the modification.
+or
+You can generate an New Ansible configuration file, ansible.cfg  then copy all default setting here and modify the setting as above.
+-------------------------------------------------------------
+Note:- Below process is required for source and destnation both server.
+-------------------------------------------------------------
+# Passwordless communication between Ansible & Node server-
+ Note:- Perform this activity using root user-
+
+Note:- It is recommended to create new user and work under that user in the server, do not use root user.
+
+1) adduser ansible
+2) enter password
+or
+passwd username enter
+then mention the password
+# For all Linux OS-
+
+3) open "visudo" and allow sudo previlege to new user
+visudo
+# make entry of new user under this line "User privilege specification"
+EX.
+ansible ALL=(ALL) NOPASSWD: ALL  
+Save and exit from the file
+
+4) For Ubuntu OS-
+Open "/etc/ssh/sshd_config" and change below parameters-
+PermitRootLogin prohibit-password- uncommented
+PasswordAuthentication yes
+
+@ For Amazon OS-
+PermitRootLogin yes    uncommented
+
+PasswordAuthentication yes  Uncommented
+
+# PasswordAuthentication no  commented
+
+Now save and exit
+5) Run below command
+
+service sshd restart
+
+6) Now go to new user and ssh the node server
+su - username
+ssh nodeusername@node private IP
+enter the password
+-----------------------------------------
+-----------------------------------------
+7) Now setup passwordless communication
+su - "ansible server new user name"
+ssh-keygen
+ ls -la
+cd .ssh/
+ls
+@ Now copy public key to node server-
+cat id_rsa.pub
+copy public key
+ ssh-copy-id "nodeserver username@172.31.34.44( node server private ip)
+Enter node user password only one time then it will not ask again
+output- Number of key(s) added: 1
+
+8) Now ssh the node server
+
+ssh "node user name"@172.31.34.44
+then it will not ask node server password again and we will login to node server.
+
+# Note:- Perform this activity using root user-
+1) Now create New user in node and give sudo previlege("visudo") & Also Open "/etc/ssh/sshd_config" and change below parameters-
+
+PermitRootLogin prohibit-password- uncommented
+PasswordAuthentication yes
+Now save and exit
+2) Run below command
+service sshd restart
+
+
+
+# Ansible installation in Amazon linux 2023
+Note- Amazon Linux 2023 (AL2023) doesn't support EPEL.
+1) sudo yum update
+------
+2)  python3 --version
+3)  yum install python3-pip/ sudo dnf install python3-pip
+4)   pip3 --version
+--------
+5) sudo yum install ansible/sudo pip install ansible
+
+# Ansible installation in Amazon linux2
+
+@ Installation via PIP-
+
+1) sudo easy_install pip
+2) sudo pip install ansible
+3) sudo pip uninstall ansible
+
+@  Installing ansible via yum-
+1) sudo yum update
+2) sudo yum install ansible
+@ Installing ansible via amazon extra-
+1) sudo amazon-linux-extras install ansible2
+
+# RHEL 8:
+@ Install the EPEL release package for RHEL 8.
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+@ RHEL 7:
+Install and turn on the EPEL release package for RHEL 7:
+
+sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+@ Then we can install Ansible, pip python etc.
+ex. sudo yum install git python python-level python-pip openssl ansible -y
+
+# CentOS 7:
+sudo yum -y install epel-release
+
+@ Then we can install Ansible, pip python etc.
+ex. sudo yum install git python python-level python-pip openssl ansible -y
+
+
+# To verify that the EPEL repository is turned on, run the repolist command:
+sudo yum repolist  
+
+
+
+

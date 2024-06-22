@@ -1,0 +1,57 @@
+LINUX COMMAND--
+@ use "route -n" to find below queries solution-
+## To display the IP/kernel routing table. $route It displays the routing table entries.
+To display routing table in full numeric form. $route -n It is even useful when you have to determine why the route to nameserver has even vanished.
+To add a default gateway. 
+To list kernel’s routing cache information.
+To reject routing to a particular host or network.
+## "uname" used to check  basic information about the operating system and hardware. With options, Uname prints kernel details,
+ and system architecture. Uname is the short name for 'UNIX name'.
+## Kernel Name-	uname -s
+# Kernel Release- uname -r
+ Kernel Version*- uname -v
+# Network Node Name (Hostname)-	uname -n
+# Machine architecture-	uname -m
+# Processor architecture-	uname -p
+# Hardware Platform (OS architecture)- uname -i
+# Operating System- 	uname -o
+
+
+@ hostname" to check host name.
+## The most common and basic usage of "cat" command is displaying the file contents. In order to display the file contents to a Terminal.
+@ cat /etc/hosts, to check "/etc/hosts file".
+## df/du command.
+@ To display information of device name, total blocks, total disk space, used disk space, available disk space, in human readable format.
+
+## mount point--  mount point is a directory in a file system where additional information is logically connected from a storage location outside the operating system’s root drive and partition. To mount, in this context, is to make a group of files in a file system structure accessible to a user or user group.
+df -hT to chech mount point,( mount point is a disk name that we can create by mkdir /mount name go to mount directory by cd mount /dev/sda1 /mount name.
+@@ df -hT  to check Display information of a particular partition,Using -hT with a target directory will show information of /etc/ in human readable format.
+
+## cat /etc/fstab 
+ In simple words, we are making the mount point permanently for that device. The "fstab" stands for the filesystem table. And the location of this file is /etc/fstab.
+
+This /etc/fstab file is created automatically at the time of the operating system installation. You can modify the information in fstab with the help of any text editor.
+## Physical volume(PV) attributes:
+to To check the physical volume attributes,use “pvs” command.The forth column of pvs command output displays the physical volume attributes.
+
+[root@mylinz ~]# pvs
+  PV         VG        Fmt  Attr PSize   PFree
+  /dev/sda2  vg_mylinz lvm2 a-    19.51g      0
+  /dev/sdd1  uavg      lvm2 a-   508.00m 408.00m
+  /dev/sde   uavg      lvm2 a-   508.00m 508.00m
+  /dev/sdf   uavg      lvm2 a-     5.00g   5.00g
+## vgs
+The vgs command provides volume group information in a configurable form, displaying one line per volume group.
+ The vgs command provides a great deal of format control, and is useful for scripting. 
+ 
+## lvs
+You could use lvs command to verify whether or not the VG has been inactivated. 
+
+## lsblk to check disk partition.
+
+To display block devices. $lsblk It displays the list of block devices on your system.
+To display empty block devices as well. #lsblk -a This will display all block devices along with empty ones.
+
+## cat /etc/export
+The primary configuration for the NFS server is the /etc/exports file.
+This is the file that you use to specify what directories you want to share with the NFS clients.

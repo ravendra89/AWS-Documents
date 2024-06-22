@@ -8,25 +8,8 @@ In simple words, it is the speed with which the data transfer task place between
 ## For linux---
 ## below command to check IOPS status----
 
-@ iostat. iostat can be used to report the disk read/write rates and counts for an interval continuously. …important
-@ iotop. iotop is a top-like utility for displaying real-time disk activity. …important
-@ by typing iotop -o option, i will get the actual i/o activity.
-@ with the help of iostat command, i will get individual hard disk i/o activity
-iostat -dx 5
+@ iostat. iostat can be used to report the disk read/write rates and counts for an interval continuously. …
+@ iotop. iotop is a top-like utility for displaying real-time disk activity. …
 @ dstat. dstat is a little more user-friendly version of iostat , and can show much more information than just disk bandwidth. …
 @ atop. …
-@ ioping
- 
-@ formula- 1/disk average latency in second + disk average seek time in second,  to calculate DISK IOPS
-iostat -xd 1   to check Disk latency( disk average latency)
-
-
-
-
-# for window-
-go to server performance monitor and check
-
-
-
-@ IOPS limit agar -1 h iska means iops unlimited hai
-
+@ ioping 

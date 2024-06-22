@@ -1,0 +1,22 @@
+# In this article, we will explore two methods for downloading multiple files from Amazon S3 TO LOCAL pc using the AWS CLI:
+
+
+Method 1: Download Each File Individually
+The first method for downloading multiple files from Amazon S3 is to use the aws s3 cp command to download each file individually.
+ Here is an example command to download four files from an S3 bucket:
+1) aws s3 cp s3://<bucket-name>/<object-key1> <local-folder-path>
+@ download multiple object specified single line commands-
+aws s3 cp s3://<bucket-name>/<object-key1> <local-folder-path> && aws s3 cp s3://<bucket-name>/<object-key2> <local-folder-path> && aws s3 cp s3://<bucket-name>/<object-key3> <local-folder-path> && aws s3 cp s3://<bucket-name>/<object-key4> <local-folder-path>
+Replace <bucket-name> with the name of your S3 bucket, <object-key1> through <object-key4> with the keys of the four files you want to download, and <local-folder-path> with the path to the local folder where you want to save the downloaded files.
+
+This command should download each of the four objects individually to the specified local folder.
+
+This method is faster than downloading each file individually, especially if you are downloading a large number of files.
+
+Method 2: Download Multiple Files using aws s3 sync
+The second method for downloading multiple files from Amazon S3 is to use the aws s3 sync command to download multiple files at once. Here is an example command to download four files from an S3 bucket:
+
+aws s3 sync s3://<bucket-name> <local-folder-path> --exclude "*" --include "<object-key1>" --include "<object-key2>" --include "<object-key3>" --include "<object-key4>"
+Replace <bucket-name> with the name of your S3 bucket, <object-key1> through <object-key4> with the keys of the four files you want to download, and <local-folder-path> with the path to the local folder where you want to save the downloaded files.
+
+The --exclude "*" the option is used to exclude all other objects in the bucket from being downloaded, and the --include options are used to include the four specific objects that you want to download.

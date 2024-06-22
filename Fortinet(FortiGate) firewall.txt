@@ -1,0 +1,7 @@
+## What is FortiGate Firewall?
+FortiGate, a next-generation firewall from IT Cyber Security leaders Fortinet, provides the ultimate threat protection for businesses of all sizes.
+ Utilising purpose-built security processors and threat intelligence from FortiGuard, a FortiGate firewall delivers unmatched performance and 
+protection while simplifying your network.Fortinet offers FortiGate models to satisfy any deployment requirement, 
+from the entry-level FortiGate-20 series for small offices and retail networks to the FortiGate-1500 series for large enterprises.
+## How Does FortiGate Firewall Work?
+In short, a FortiGate firewall works by examining the data that flows in to your network and verifying if it is safe to pass through to your business.

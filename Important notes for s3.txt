@@ -1,0 +1,22 @@
+# Upload a single object by using the Amazon S3 console – With the Amazon S3 console, we can upload a single object up to 160 GB in size. 
+
+# Upload an object in Multi-parts by using the AWS SDKs, REST API, or AWS CLI – we can upload a single large object, up to 5 TB in size.
+
+# below service is used to tranfer data to and from s3 bucket-
+We can choose any one service:-
+1 AWS Storage Gateway.
+2 AWS DataSync.
+3 AWS Direct Connect.
+4 AWS Snowball storage.
+5 Amazon S3 Transfer Acceleration.
+6 Using the AWS CLI. AWS SDK, REST API ( Multi-parts upload)
+
+# Amazon S3 multipart upload limits:-
+Item                                           Specification
+Maximum object size:-	                       5 TiB
+Maximum number of parts per upload:-	       10,000
+Part numbers:-	                               1 to 10,000 (inclusive)
+Part size:-	                               5 MiB to 5 GiB. There is no minimum size limit on the last part of your multipart upload.
+Maximum number of parts returned for a list parts request:-	1000
+Maximum number of multipart uploads returned in a list multipart uploads request:-	1000
+

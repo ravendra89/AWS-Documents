@@ -1,0 +1,40 @@
+1) install AWS CLI
+2) Configure aws access key and secret access key into lical pc
+3)  aws s3 ls
+4) aws s3 ls s3://bucket-name to list the object in bucket
+5) aws s3 mb s3://bucket-name  to create bucket
+6) aws s3 rb s3://bucket-name   to remove buckets
+7) aws s3 rb s3://bucket-name --force   to remove non empty bucket
+# Copy a Local Folder to the S3 Bucket
+8) aws s3 cp localfolder s3://mybucket --recursive
+
+@ Replace "localfolder" with the path to the local folder that you want to copy, and "mybucket" with the name of the S3 bucket that you created in step 2.
+The "--recursive" flag tells the CLI to copy all files and subdirectories within the local folder.
+ If you only want to copy specific files or folders,you can specify them in the command instead.
+9)  aws s3 ls s3://mybucket
+
+# Upload multi-part files to Amazon S3 using AWS CLI----
+@ Important: It's a best practice to use aws s3 commands, such as aws s3 cp,
+ for multipart uploads and downloads. This is because aws s3 commands automatically perform multipart uploading and downloading based on the file size.
+
+1) aws s3 cp large_test_file s3://BUCKET-NAME/
+
+@ We can also use other aws s3 commands that involve uploading objects into an S3 bucket. 
+For example, aws s3 sync or aws s3 mv.
+
+# optional:- 
+note:-we can also  enable MD5 checksum value from s3 console during uploading of object- browse the object and before uploaded the object go to properties and enable MD5 checksum. 
+its provide 4 type of checksum but we use SHA-256
+
+@ For CLI:- Objects that you upload as multiple parts to Amazon S3 have a different ETag format than objects that you use the traditional PUT request to upload. 
+To store the MD5 checksum value of the source file as a reference, upload the file with the checksum value as custom metadata. To add the MD5 checksum value as custom metadata, 
+include the optional parameter --metadata md5="examplemd5value1234/4Q" in the upload command:
+
+1) aws s3 cp large_test_file s3://DOC-EXAMPLE-BUCKET/ --metadata md5="examplemd5value1234/4Q"
+
+To use more of your host's bandwidth and resources, increase the maximum number of concurrent requests that are set in your AWS CLI configuration. By default, the AWS CLI uses 10 maximum concurrent requests. This command sets the maximum concurrent number of requests to 20:
+
+2) aws configure set default.s3.max_concurrent_requests 20
+
+
+

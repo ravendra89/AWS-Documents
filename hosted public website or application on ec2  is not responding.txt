@@ -1,0 +1,90 @@
+# How to troubleshoot the issue where public website/application that is hosted on  Amazon EC2 instance is unresponsive.
+
+@ A website hosted on EC2 instance can be unreachable for several reasons. Following are some of the common steps to troubleshoot this scenario. 
+
+1) Check that the instance is running and passing both status checks.
+
+Log into the EC2 console and check systems and instance level health checks of EC2 instance, make sure that both the health checks are passing.
+Confirm under that the monitoring tabs that all metrics (kernel panics, boot errors, out-of-memory errors, CPU usage Network statistics, network out, network in, storage, etc.) 
+are within the limit.
+
+2) Make sure that the instance-associated security groups and network ACLs allowed traffic on port 80 and 443. We can also check the network ACLs. Under the Networking tab.
+
+3) Make sure that the route table in the instance subnet has default route to the internet. 
+
+4) Check that the instance has the correct DNS configuration---
+>> If your website uses Route 53 DNS service, check that you've configured the DNS records correctly.
+ Make sure to map your elastic IP address to the domain name.Make sure to map the public IP address or Elastic IP address to an A-record.
+>> Make sure that the instance has an Elastic IP address assigned to it. If you stop and start your instance, the Elastic IP address is still associated with the instance.
+
+5) To verify the httpd service and OS level firewall, connect to the instance and then use the following SSH command.
+
+   sudo systemctl status httpd
+   sudo systemctl restart httpd
+@ Confirm that traffic is received on port 80 and 443 by running the following command: 
+
+  netstat -tunlp | grep -i http
+@ Verify the status of OS-level firewall. If the firewall is active, either stop it or allow port 80 and 443. You can review the status of firewall using following command: 
+
+sudo firewall-cmd --state  to check the firewall status
+
+sudo systemctl stop firewalld    to stop the firewall 
+
+@ Disable the FirewallD service at boot time
+systemctl disable firewalld.service
+sudo systemctl disable firewalld
+sudo systemctl mask --now firewalld
+
+@ Verify that the FirewallD is gone
+sudo systemctl status firewalld
+
+@ 
+>> Check Firewall Status
+iptables -L
+>> Before stoping the iptables, save the firewall setting using the following command:
+ service iptables save
+>>  Stop iptables Service
+service iptables stop
+chkconfig iptables off
+@ systemctl status iptables
+ systemctl start iptables
+ systemctl enable iptables
+
+@ How do enable the firewalld again
+sudo systemctl unmask --now firewalld
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+## verify that the firewalld started ##
+sudo firewall-cmd --state
+
+
+
+If the firewall service is running allow HTTP and HTTPS using the following commands:
+
+sudo firewall-cmd --add-service=http --permanent
+
+sudo firewall-cmd --add-service=https --permanent
+
+sudo firewall-cmd --reload
+
+on Ubuntu or Debian system, use the following command:
+
+sudo ufw status verbose
+
+If UFW (Uncomplicated firewall) is running on Ubuntu instance, then allow HTTP and HTTPS using the following command.
+
+sudo ufw allow in 80/tcp
+
+sudo ufw allow 443/tcp
+
+sudo ufw status
+sudo ufw disable
+@ Disable the ufw on Linux at boot time
+
+sudo systemctl disable ufw
+
+Finally, review the error and access log under /var/log
+ Amazon Linux and RHEL: /var/log/httpd
+Debian and Ubuntu: /var/log/apache2
+ Then relaunch public website address to confirm if issue has been resolved.
+   
