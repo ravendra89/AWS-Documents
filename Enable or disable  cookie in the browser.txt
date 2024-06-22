@@ -1,0 +1,26 @@
+# Chrome
+Click the Customize and control Google Chrome menu button in the upper right-hand corner of the browser bar.
+1- Click "Settings."
+2- Scroll down to the Privacy and security section.
+3- Click "Site Settings".
+4- Click "Cookies and site data".
+5- In the Privacy and security section, click Content Settings.
+6 -Click the slider to "Allow sites to save and read cookie data (recommended)"
+
+# Edge
+1- Click the Settings and more button in the upper right-hand corner of the browser bar.
+2- Click Settings.
+3- Click Privacy & security.
+4- In the Cookies section, click "Don't block cookies".
+
+# Firefox
+1- Click the Open menu button Menu icon in the upper right-hand corner of the browser bar.
+2- Click Options.
+3- Click Privacy & Security.
+4- In the "Enhanced Tracking Protection" section, select Standard.
+
+# Safari
+1- Click Safari > Preferences.
+2- Click on the Privacy tab.
+3- In the "Cookies and website data" section, make sure that "Block all cookies" is unchecked.
+4- Close the Preferences window.
