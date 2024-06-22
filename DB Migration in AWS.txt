@@ -1,0 +1,66 @@
+Note:- We have two option to migrate DB to RDS-
+
+1) Migrate data - option 1 (using native tools)-
+Use native MySQL tools or third-party tools to migrate database objects and data.
+
+For instructions, see the documentation for MySQL tools such as mysqldbcopy, mysqldump, and Percona XtraBackup (for physical migration).
+
+For more information about options, see the blog post Migration options for MySQL to Amazon RDS for MySQL or Amazon Aurora MySQL
+
+2) Migrate data - option 2 (using AWS DMS)-
+
+  Migrate data with AWS DMS.
+
+@ Steps of DMS-
+
+1) Create a MySQL database instance in Amazon RDS. 
+2) Create a replication instance in AWS Database Migration Service (AWS DMS).
+3) Create Source & Target endpoints in AWS DMS. 
+4) Create a replication task in AWS DMS. 
+5) Complete the migration and clean up resources.
+
+Note:- We can monitor migration from DMS console ang logs from clodwatch logs
+
+
+# What is the AWS Schema Conversion Tool?
+
+You can use the AWS Schema Conversion Tool (AWS SCT) to convert your existing database schema from one database engine to another.
+
+
+
+
+
+# Migrating MySQL-Compatible Databases to AWS
+Limitations
+Database size limit: 64 TB
+
+Amazon Web Services (AWS) has several services that allow you to run a MySQL-compatible database on AWS.
+ Amazon Relational Database Service (Amazon RDS) supports MySQL-compatible databases including MySQL, MariaDB, and Amazon Aurora MySQL.
+ Amazon Elastic Compute Cloud (Amazon EC2) provides platforms for running MySQL-compatible databases.
+
+Migrating From	Solution
+# Migration in Amazon RDS for MySQL DB instance-
+
+You can migrate data directly from an Amazon RDS for MySQL DB snapshot to an Amazon Aurora MySQL DB cluster. For details,
+ see Migrating Data from an Amazon RDS MySQL DB Instance to an Amazon Aurora MySQL DB Cluster.
+
+# MySQL database external to Amazon RDS
+
+If your database supports the InnoDB or MyISAM tablespaces, you have these options for migrating your data to an Amazon Aurora MySQL DB cluster:
+
+1) You can create a dump of your data using the mysqldump utility, and then import that data into an existing Amazon Aurora MySQL DB cluster.
+
+2) You can copy the source files from your database to an Amazon Simple Storage Service (Amazon S3) bucket, and then restore an Amazon Aurora MySQL DB cluster from those files. 
+This option can be considerably faster than migrating data using mysqldump.
+
+
+# Migrating Data from an External MySQL Database to an Amazon Aurora MySQL Using Amazon S3
+
+https://docs.aws.amazon.com/dms/latest/sbs/chap-mysql2aurora.html#chap-mysql2aurora.mysqldump
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+
+
+@ Inspect Reboot Time-
+* You can check when the system reboot happened with "who" and "last" commands.
+
+Example 1- $ who -b
+system boot 2021-02-13 20:51
+
+Example 2- $ last -x | head | tac
+esds pts/0 192.168.1.16 Sat Feb 13 19:53 - 19:55 (00:02)
+reboot system boot 3.10.0-1160.11.1 Sat Feb 13 19:55 - 20:54 (00:58)
+runlevel (to lvl 3) 3.10.0-1160.11.1 Sat Feb 13 19:55 - 20:04 (00:08)
+
+# Check System Messages-
+You can further correlate the reboot you want to diagnose with system messages.
+
+# For CentOS/RHEL systems, /var/log/messages 
+
+# Ubuntu/Debian systems, /var/log/syslog. 
+You can simply use the tail command or your favorite text editor to filter out or find specific data.
+
+this avove command we can be check such entries suggest a shutdown/reboot initiated by an administrator or root user.

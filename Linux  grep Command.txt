@@ -1,0 +1,17 @@
+1) grep -i "stringname" welcome.txt
+Or
+grep -i  searchword  welcome.txt
+grep -i: The 'grep -i' command filters output in a case-insensitive way. Means search particular patterns in the file
+2) search for a string in your current directory and all other  subdirectories, search using the - r
+grep -r "string-name" *
+3) To count the total number of lines where the string pattern appears or resides, execute the command below
+grep -c "strong name" welcome.txt
+
+4) Now, to display the lines that don’t contain the string
+grep -v "string" welcome.txt
+5) Number the lines that contain the search pattern with -n option
+grep -n "string" welcome.txt
+
+6) Search for exact matching word using the -w option
+$ grep -w "opensource" welcome.txt
+

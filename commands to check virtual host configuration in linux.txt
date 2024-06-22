@@ -1,0 +1,29 @@
+# How to debug an apache virtual host configuration?
+
+Syntax check
+To check configuration files for syntax errors:
+
+# Red Hat-based (Fedora, CentOS), Arch-based and OSX
+httpd -t
+
+# Debian-based (Ubuntu)
+apache2ctl -t
+
+# MacOS
+apachectl -t
+
+
+# List virtual hosts
+To list all virtual hosts, and their locations:
+
+# Red Hat-based (Fedora, CentOS), Arch-based and OSX
+httpd -S
+
+# Debian-based (Ubuntu)
+apache2ctl -S
+
+# MacOS
+apachectl -S
+
+# check the nginx virtual host configuration in linux
+ nginx -t 

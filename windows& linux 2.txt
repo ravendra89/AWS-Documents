@@ -1,0 +1,55 @@
+For windows server----
+## steps for check log events--
+1-search edit group policy- computer configuration-windows setting-security setting-local computer policy-audit policy-audit logon event-check on both success and failure-apply.
+2- search event viewer-windows log-security-filter current logs- set time- enter event id in place of all event id( for logon logs-4624, for shutdown logs-4634)-ok-check.
+OR
+## Check shutdown log on windows server-
+Steps to see which user shutdown the system:
+
+1. Go to event Viewer
+
+2. Right click on system and -> Filter Current Log
+
+3. For User Shutdowns, click downward arrow of Event Sources -> Check User32.
+
+4. In <All Event IDs> type  1074 -> OK
+
+This will give the list of Power off and restart events. It will have the date and time as well as Username.
+
+## Check Successful or Failed Windows Login Attempts---
+ in window + R, run the commond-"gpedit.msc"-In Group Policy Editor- navigate to Windows Settings >> Security Settings >> Local Policy >> Audit Policy. 
+Then double click on Audit Logon Events. From there, check the boxes to audit successful or failed audit attempts and click OK. 
+## how to find  Fault logs for applications.
+Click Start > Control Panel > System and Security > Administrative Tools. Double-click Event Viewer. Select the type of logs that you wish to review
+
+## how to use telnet--
+From outside, just use telnet host port or (telnet host:port on Unix systems) to see if 
+the connection is refused, accepted, or timeouts.
+output-- blanks screen with open( if server is reachable).
+
+On that latter test, the output is--
+
+*connection refused means that nothing is running on that port
+*accepted means that something is running on that port
+*timeout means that a firewall is blocking access.
+## how to install telnet in window server 2012 r2----
+@ Open server manage-click add role and feature-click next in the first page of the add roles and features wizard-
+make sure role base or feature based installation radio button is selected then next -
+select server where I want to install the telnet-nex-select telnet server from the list of available features and next-click install-close
+## how to install telnet in windows 10---
+@ go to control panel-program-program& feature-turn windows features on/off-enabled telnet.
+@ telnet se ham kisi bi ip ko check kar sakte h ki reachable h ya nhi
+
+## To Open/Allow port 443 (HTTPS) in Windows Server.
+
+ Create an inbound or outbound rule in windows firewall depending on your requirement.
+
+Go to run window, windows button + r
+Type in firewall.cpl
+Go to advanced settings
+Select Inbound Rule/Outbound rule
+On the right side select new Rule
+Select Port & Next
+Select TCP and check specific local ports & enter the port number
+Allow the connection
+Select the profile depending on your needs, If you cant decide, check all of them.

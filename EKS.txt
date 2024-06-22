@@ -1,0 +1,13 @@
+# AWS EKS Networking(VPC) when creating eks cluster using eksctl- https://eksctl.io/usage/vpc-configuration/
+
+
+
+AmazonEC2ContainerRegistryReadOnly:    This permission allows EKS to access the Amazon Elastic Container Registry (ECR) for pulling container images.
+
+AmazonEKSWorkerNodePolicy:             This policy grants necessary permissions for worker nodes in the EKS cluster to communicate with the EKS control plane.
+
+AmazonEKSClusterPolicy:                It provides permissions for cluster management operations, such as creating and describing clusters.
+
+AmazonEKSServicePolicy:                This policy is necessary for managing the EKS service itself, including updates and scaling.
+
+AmazonEKSVPCResourceController:       This permission allows EKS to manage networking resources in the Virtual Private Cloud (VPC) associated with the cluster.

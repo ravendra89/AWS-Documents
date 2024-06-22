@@ -1,0 +1,110 @@
+#  RBAC. A technique for controlling access to a computer or network resources based on the responsibilities of certain users within your company is called role-based access control (RBAC). 
+    You may dynamically configure policies using the Kubernetes API thanks to RBAC authorization, which relies on the rbac.authorization.k8s.io API group to drive authorization decision.
+• The RBAC has four kinds of objects: Role, ClusterRole, RoleBinding, and ClusterRoleBinding.
+
+@ At a high level, Roles and RoleBindings are placed inside and grant access to a specific namespace, 
+  while ClusterRoles and ClusterRoleBindings do not belong to a namespace and grant access across the entire cluster. 
+  However, it is possible to mix these two types of resources.
+
+# Create RBAC (Role & RoleBinding) in Kubernetes
+URLS:- https://spacelift.io/blog/kubernetes-rbac
+
+1) crete ConfigMap
+apiVersion: v1
+
+kind: ConfigMap
+
+metadata:
+
+  name: aws-auth
+
+  namespace: kube-system
+
+data:
+
+  mapUsers: |
+
+    - userarn: arn:aws:iam::357171621133:user/rbac-user
+
+      username: rbac-user
+2) crete ConfigMap
+
+kind: RoleBinding
+
+apiVersion: rbac.authorization.k8s.io/v1">rbac.authorization.k8s.io/v1
+
+metadata:
+
+  name: read-pods
+
+  namespace: rbac-test
+
+subjects:
+
+- kind: User
+
+  name: rbac-user
+
+  apiGroup: rbac.authorization.k8s.io
+
+roleRef:
+
+  kind: Role
+
+  name: pod-reader
+
+  apiGroup: rbac.authorization.k8s.io
+3) crete Role
+
+kind: Role
+
+apiVersion: rbac.authorization.k8s.io/v1
+
+metadata:
+
+  namespace: rbac-test
+
+  name: pod-reader
+
+rules:
+
+- apiGroups: [""] # "" indicates the core API group
+
+  resources: ["pods"]
+
+  verbs: ["list","get","watch"]
+
+- apiGroups: ["extensions","apps"]
+
+  resources: ["deployments"]
+
+  verbs: ["get", "list", "watch"]
+
+
+
+
+
+
+
+
+
+
+
+
+# AWS EKS Networking(VPC) when creating eks cluster using eksctl- https://eksctl.io/usage/vpc-configuration/
+
+@ What permissions are needed for EKS cluster?
+Initially, only the creator of the Amazon EKS cluster has system:masters permissions (AmazonEKSClusterPolicy) to configure the cluster. 
+To extend system:masters permissions to other users and roles, you must add the aws-auth ConfigMap to the configuration of the Amazon EKS cluster.
+
+AmazonEC2ContainerRegistryReadOnly:    This permission allows EKS to access the Amazon Elastic Container Registry (ECR) for pulling container images.
+ 
+AmazonEKSWorkerNodePolicy:             This policy grants necessary permissions for worker nodes in the EKS cluster to communicate with the EKS control plane.
+ 
+AmazonEKSClusterPolicy:                It provides permissions for cluster management operations, such as creating and describing clusters.
+ 
+AmazonEKSServicePolicy:                This policy is necessary for managing the EKS service itself, including updates and scaling.
+ 
+AmazonEKSVPCResourceController:       This permission allows EKS to manage networking resources in the Virtual Private Cloud (VPC) associated with the cluster.
+ 
+ 

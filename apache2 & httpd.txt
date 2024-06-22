@@ -1,0 +1,93 @@
+# httpd configuration and host website on redhat/centos/Fedora---
+sudo yum update httpd
+sudo yum install httpd
+# its for out of aws server--
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo systemctl start httpd
+sudo systemctl status httpd
+# server root directort path---
+/var/www/html
+# make directort-
+sudo mkdir -p /var/www/html/ravendra.co
+# copy our application file here
+through cp command-
+sudo cp index.html /var/www/html/ravendra.co
+
+# host entry
+vi /etc/hosts
+# to check server ip-
+hostname -I
+#  we can use curl to request your IP from icanhazip.com, 
+which will give you your public IPv4 address as seen from another location on the internet:
+curl -4 icanhazip.com(our website name)
+# Managing the Apache Process--
+sudo systemctl stop httpd
+sudo systemctl start httpd
+sudo systemctl restart httpd
+sudo systemctl reload httpd
+sudo systemctl disable httpd
+sudo systemctl enable httpd
+#Setting Up Virtual Hosts--
+cd /etc/httpd/
+ls
+httpd.conf--- all default configuration
+vi /etc/httpd/conf.d/ravendra.co.conf -- edit this file
+
+# For Amazon linux---
+
+<VirtualHost *:80>
+    ServerAdmin admin@ravendra.co
+    DocumentRoot "/var/www/html/ravendra.co/
+    ServerName ravendra.co
+    ErrorLog "logs/ravendra.co-error_log"
+    CustomLog "logs/ravendra.co-access_log" common
+</VirtualHost>
+
+# For redhat ---
+<VirtualHost *:80>
+    ServerAdmin webmaster@ravendra.co
+    DocumentRoot /var/www/html/ravendra.co
+    ServerName ravendra.co
+    ErrorLog logs/host.ravendra.co-error_log
+    CustomLog logs/host.some_ravendra.co-access_log common
+</VirtualHost>
+
+
+sudo systemctl restart httpd
+sudo systemctl reload httpd
+
+
+# For ubuntu server--
+root directory- /var/www/html
+sudo apt update
+sudo apt-get install apache2
+# copy our index file into /var/www/html/ravendra.co
+
+# hosts entry
+sudo vi /etc/hosts
+# virtual host configuration-
+/etc/apache2
+ls
+apache2.conf---all default configuration
+cd /etc/apache2/sites-available
+sudo cp 000-defaults ravendra.co.conf--( .conf is urgent)
+ls
+sudo vi /etc/apache2/sites-available/ravendra.co.conf
+ 
+ ServerAdmin webmaster@ravendra.co
+ DocumentRoot /var/www/ravendra.co/
+ ServerName   ravendra.co
+## give onwer permission
+sudo chown -R $USER:$USER /var/www/ravendra.co
+sudo chmod -R 755 /var/www/
+
+# sudo a2ensite ravendra.co.conf
+ sudo a2dissite 000-default.conf
+sudo  systemctl reload apache2
+ sudo  systemctl restart apache2
+
+
+
+
+

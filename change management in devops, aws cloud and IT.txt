@@ -1,0 +1,67 @@
+## What is DevOps change management?
+  Change management within DevOps is a structured approach for handling change within a development cycle.
+These can be modifications, upgrades, or updates that need to be integrated into the software without causing system issues or customer inconvenience.
+
+>> Devops/Cloud environments also provide a variety of automation, integration, and deployment tools that allow the organization to make small, frequent changes
+ that reduce business risk and introduce business value at an increased rate. These include solutions such as:
+
+Git
+Jenkins
+Chef
+Puppet
+Ansible
+
+>> Why is DevOps change management important?
+  Changes management is important because it can 1) improve system performance, functionality, Risk mitigation, stability. 2) Reducing the risk of failures and downtime
+3) Enabling continuous improvement
+
+## Change Management in aws cloud
+Change Management offers capabilities for tracking changes to AWS resources, defining maintenance windows for changes to systems, 
+control specific actions during major events to avoid disruptions, and use automations to perform such change management tasks.
+>> Change Manager:-
+Change Management is an important part of Operational Excellence. Change Manager is a framework for request, approving, implementing, and reporting 
+on operational changes to application configuration and infrastructure. The Change Manager feature allows for use of pre-approved change templates 
+to assist in automating change progresses.
+
+>> It's key to remember that all changes should be delivering business value and that change management should be focused on optimizing business risk in a way that maximizes
+ productivity while minimizing wasted effort or cost. The AWS Cloud enables automation that optimizes this business risk by:
+
+1) Minimizing the possibility of human error,
+
+2) Enabling the creation of identical environments for predictable and testable outcomes to changes,
+
+3) Removing the requirement to submit changes to scale infrastructure to meet business demand, and
+
+4) Automatically recovering from failure and rolling back failed changes.
+
+
+
+
+
+## What is IT change management
+
+Change management—also known as change enablement—is an IT practice designed to minimize disruptions to IT services while making changes to critical systems and services. 
+
+A change is adding, modifying, or removing anything that could have a direct or indirect effect on services.
+>> Types of changes:-
+ITIL defines three types of changes.
+1) Standard changes
+Standard changes are low-risk, commonly repeated, and pre-approved. They’re performed frequently and follow a documented, approved process. 
+
+For example, adding memory or storage is a standard change. Replacing a failing router with an identical working router is a standard change.
+ Creating a new instance of a database is a standard change.
+2) Normal changes
+Normal changes are non-emergency changes that don’t have a defined, pre-approved process. 
+
+For example, Performance improvements are normal changes, website change. Migrating to a new data center is a normal change.
+
+3) Emergency changes
+These changes arise from an unexpected error or threat and need to be addressed immediately—usually to restore service for customers or employees or secure systems against a threat. 
+
+For example, implementing a security patch is an emergency change. Dealing with a server outage is an emergency change. Resolving a major incident is an emergency change. 
+
+
+
+
+
+

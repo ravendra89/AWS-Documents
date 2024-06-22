@@ -1,0 +1,72 @@
+@ Extend EBS root volume partition and resize the Filesystem size---
+# Determine whether our instance is xen-based or Nitro-based, using below commands-
+
+aws ec2 describe-instance-types --instance-type instance_mentioninstancetpye  --query "InstanceTypes [].Hypervisor"
+# Check the Block Devices-
+sudo lsblk
+# check the Filesystem size-
+sudo df -h
+# Modifying Your EBS volume on AWS Management Console
+
+but we need to upgrade size what size we need to extend in partition
+because in root volume, there is no optition to increase the partition size wise
+it will increase the disk partition size what size is available in root volume after upgraded from the console
+
+@ For Nitro-based system--
+# Extend the partition
+sudo growpart /dev/xvda 1
+
+# now check the partition-
+sudo lsblk
+#  we need to determine whether the disk use ext3-ext4 or xfs file system:
+sudo file -sL /dev/xvda1
+
+# we also need to resize the filesystem to be able to use it:
+For ext4 based filesystem type- 
+sudo resize2fs /dev/xvda1
+For xfs based filesystem type- 
+sudo xfs_growfs /dev/xvda1
+
+# Now check filesystem size
+ sudo df -h
+
+Note:- Same above process will be apply in Xen-based system
+Note- We can increase any Existing partition of root volume using above process and no need to make filesystem and no need to create mount point.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Note-1 we can create new partition in root volume usung below command-
+fdisk /dev/xvda  ( xvda is a main root valume name)
+then create partition- specify the required size( ex. +5G)- press w to save it
+but before this we need to increase volume from console
+
+# crete file system-
+
+mkfs.ext4 /dev/xvda1(new partition)    -----make ext4 based filesystem
+or 
+mkfs.xfs /dev/xvda1(new partition)    -----make xfs based filesystem
+or
+sudo mkfs -t ext4 or xfs /dev//xvda1(new partition)
+or make forcefully file system-
+mkfs.ext4 -f /dev/xvda1
+
+# sudo mkdir /data
+# mount the filesystem-
+mount /dev/xvda1(new partition) /data   ( data is new directory) this mount point will also be created into root volume
+or
+# we can also use below step to mount the partition into root volume- but not recommended
+
+mount /dev/xvda1(new partition) /
+or
+mount /dev/xvda1(new partition) /.
+
+
+
+
+
+
+
+
+

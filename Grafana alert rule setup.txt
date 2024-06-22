@@ -1,0 +1,23 @@
+# modify the below file from grafana server-
+ sudo vi /etc/grafana/grafana.ini
+
+[smtp]
+enabled = true
+host = email-smtp.ap-south-1.amazonaws.com:465 OR for gmail>> smtp-gmail.com:465
+user = AKIATE6QLNPTWOVHF26U
+# If the password contains # or ; you have to wrap it with triple quotes. Ex """#password;"""
+password = BDglDoNV952UDdqHZzujGxaUiI73x2orQcvgA/NjcEfv
+;cert_file =
+;key_file =
+skip_verify = true
+from_address = ravendra.tiwari75@gmail.com
+from_name = Grafana
+
+1) go to dashboard
+2) go to particular resource ex: CPU- click on 3 dot- more-add new alert rule-and create alert rule
+3) create contact point
+4) create notication policy- select label that we specified in the rule -select contact point- and create policy 
+
+Note- Link the alert rule with dashboard if it is not linked--
+go to alert rule-click on edit alert rule-go to Add annotations-click on link dashboard and panel-
+select dashboard-click on panel title-click on confirm-now save the rule.

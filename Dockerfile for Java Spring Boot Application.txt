@@ -1,0 +1,15 @@
+# Dockerfile for Java Spring Boot Application
+
+FROM openjdk:18
+WORKDIR /app
+COPY ./target/spring-0.0.1-SNAPSHOT.jar /app
+EXPOSE 8080
+CMD ["java", "-jar", "spring-0.0.1-SNAPSHOT.jar"]
+
+# Sample Dockerfile for Java
+FROM java:8
+WORKDIR /var/www/java
+COPY . /var/www/java
+RUN javac Sample.java
+CMD ["java", "Sample"]
+

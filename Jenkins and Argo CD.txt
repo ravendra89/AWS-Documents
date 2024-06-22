@@ -1,0 +1,6 @@
+
+Jenkins and Argo CD are two popular tools for managing CI/CD pipelines,
+Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. Specifically designed for Kubernetes deployments
+
+Argo CD, on the other hand, is a dedicated tool for deploying applications to Kubernetes clusters.
+ It provides a declarative approach to application deployment, which can simplify the process and reduce the risk of errors.

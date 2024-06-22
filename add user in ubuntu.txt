@@ -1,0 +1,11 @@
+sudo adduser newuser
+You can view what groups your new user is in with the groups command:
+
+groups newuser
+
+In order to add the user to a new/sudo group, you can use the usermod command:
+
+usermod -aG sudo newuser
+# delete user
+deluser newuser
+deluser --remove-home newuser

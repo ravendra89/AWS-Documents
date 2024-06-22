@@ -1,0 +1,126 @@
+# Grafana with prometheous & node_expoter
+--------------------------------------------------------
+Note: go to prometheus.io and download node_expoter
+1) node_exporter
+depault port= 9100
+2) download links-
+cd /opt
+wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
+sudo tar -xvdf expotername
+sudo mv node_expotername  node_expoter
+
+cd node expoter
+./nodeexpoter  to start the node expoter
+------------------------------------------------
+
+# download prometheus
+./prometheus --version
+default port- 9090
+1) open prometheus.ip
+2) copy link address
+cd opt
+sudo wget https://github.com/prometheus/prometheus/releases/download/v2.49.1/prometheus-2.49.1.linux-amd64.tar.gz
+
+sudo tar -xvzf prometheusfile name
+sudo mv prometheusfilename prometheus
+
+3) cd  prometheus.yml
+ls
+Note:- all the target details mentioned in the  prometheus.yml directory
+
+4)sudo  vi  prometheus.yml
+
+@ We need edit and specify the target host details where node_expoter is installed into below file-
+
+static_configs:
+      - targets: ["localhost:9090"]
+this above is for prometheus srver it self, we need to add target server details on same file-
+
+static_configs:
+      - targets: ["localhost:9090",172.31.44.63:9100]
+
+@ our both server is same VPC so, we are mentioned private Ip of target server with node_expoter port
+
+save file and exit
+
+@ run the below sh command to start prometheus
+ sudo ./prometheus
+4)15.206.75.79:9090
+@ click on status to target details
+-------------------------------------
+# Download grafana
+-----------------------------------------
+grafana default port is 3000
+by default username and password is admin & admin
+1) search on google "install grafana" and download it
+
+@ To install Grafana from the RPM repository, complete the following steps:
+
+Create /etc/yum.repos.d/grafana.repo with the following content:
+
+sudo vi /etc/yum.repos.d/grafana.repo
+
+[grafana]
+name=grafana
+baseurl=https://rpm.grafana.com
+repo_gpgcheck=1
+enabled=1
+gpgcheck=1
+gpgkey=https://rpm.grafana.com/gpg.key
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+
+@ save file and exit
+
+2) To install Grafana OSS, run the following command:
+sudo dnf install grafana
+sudo yum install grafana
+or
+To install Grafana Enterprise, run the following command:
+sudo dnf install grafana-enterprise
+
+3)  sudo systemctl enable grafana-server >> wherever our server will reboot then grafana server will atomatically restart.
+sudo systemctl start grafana-server
+sudo systemctl status grafana-server
+sudo systemctl stop grafana-server
+---------------some another commands-------
+grafana-server -v
+sudo service grafana-server stop
+sudo dnf remove grafana
+@ To uninstall Grafana Enterprise:
+
+sudo dnf remove grafana-enterprise
+sudo rm -i /etc/yum.repos.d/grafana.repo
+
+----------------------------
+# now browse grafana server and login it
+
+1) Click on DATA SOURCES
+Add your first data source
+
+click on prometheus >>>>DATA SOURCES
+
+2) mention the prometheus server url>> we can use private IP because both server in same vpc they can communicate with each other
+http://172.31.38.126:9090
+
+3) leave other parameter and click on save& test
+
+4) go to home page-click on dashboard and create dashboard
+
+note:- we can also import customize dashboard 
+search- grafana dashboards
+for-node-exporter
+copy ip and mention id into grafana dashboard
+click on load
+if needed then change the name-select datasource-click on import
+
+
+
+
+
+
+
+
+
+
+

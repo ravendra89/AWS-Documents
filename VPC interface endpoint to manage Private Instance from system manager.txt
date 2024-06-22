@@ -1,0 +1,70 @@
+## Create VPC interface endpoint to manage Private Instance from system manager & access private EC2 instance from session manager & perform any action ex. os patching From Patch manager.
+
+
+1) Crete VPC with atlist 2 Private subnet & routetable
+2) Crete SG with 443 rule along with 3389 OR 22
+
+@ Below IAM permission are required for Role
+
+Role-aws service-ec2-then select below permission-crete role-assign role to instance
+AmazonEC2RoleforSSM	
+AmazonSSMManagedInstanceCore		
+aws-quicksetup-patchpolicy-baselineoverrides-s3	
+
+
+
+
+# VPC interface endpoint for SSM:-
+
+1) Click on endpoint & click on create
+2) Mention the name
+3) Service category
+ AWS services
+4) Services
+ com.amazonaws.ap-south-1.ssm
+5) Select VPC
+6) Select Atlist 2 AZ with private subnet( where our interface end point will be created)
+Note:- select Same & atlist 2 Private subnet which will be use for private ec2 instance creation 
+7) Select SG & click on create endpoint
+
+# VPC interface endpoint for EC2Messages:-
+
+1) Click on endpoint & click on create
+2) Mention the name
+3) Service category
+ AWS services
+4) Services
+ com.amazonaws.ap-south-1.ec2messages
+5) Select VPC
+6) Select Atlist 2 AZ with private subnet( where our interface end point will be created)
+Note:- select Same & atlist 2 Private subnet which will be use for private ec2 instance creation 
+7) Select SG & click on create endpoint
+
+@ Crere ec2 instance using same SG & private subnet within same VPC & assign IAM role to instance
+
+@ Now we can run any command into instance using Fleet manage console.
+
+# VPC interface endpoint for com.amazonaws.ap-south-1.ssmmessages to connect instance using ssm manager:-
+
+1) Click on endpoint & click on create
+2) Mention the name
+3) Service category
+ AWS services
+4) Services
+ com.amazonaws.ap-south-1.ssmmessages
+5) Select VPC
+6) Select Atlist 2 AZ with private subnet( where our interface end point will be created)
+Note:- select Same & atlist 2 Private subnet which will be use for private ec2 instance creation 
+7) Select SG & click on create endpoint
+
+
+
+
+
+
+
+
+
+
+
+

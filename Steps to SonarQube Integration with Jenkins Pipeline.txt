@@ -1,0 +1,89 @@
+Step #1:Install SonarQube Scanner Plugin in Jenkins
+
+>>   SonarQube Scanner
+
+Step #2:Configure SonarQube server in Jenkins
+
+Go to Jenkins > Manage Jenkins > Configure System (system).
+Scroll down to the SonarQube servers section and check on Environment variables-click Add SonarQube.
+
+Name- any name ( sonarqube)
+sonarqube server URL till port in below format
+ http://localhost:9000
+OR
+ http://172.31.39.78:9000
+OR
+http://3.110.29.76:9000
+   
+Click on Add-Jenkins
+kind = secret text- paste sonarqube token here
+Note:- You can generate this token in your SonarQube server under My Account > Security > Token generate token and copy it in another text file for further use like in Jenkins.
+
+ID & Description > Any name
+Click on add to add token- select token-click on apply and save
+
+Step #3 Install sonar qube scanner into host server OR Click on Intall Automatically into jenkins GUI
+@ From Jenkins Gui- manage jenkins- tools- click on Add SonarQube Scanner- mention any name- check on Install automatically
+
+# this setup required when we installed sonarscanner into host machine
+stage('Sonarqube') {
+    environment {
+        scannerHome = tool 'SonarQubeScanner'
+    }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh "${scannerHome}/bin/sonar-scanner"
+        }
+       
+    }
+}
+
+Step #4:Create a Jenkins Pipeline to Integrate SonarQube
+Create a New Pipeline Job in Jenkins:
+
+Click on “New Item” in the Jenkins dashboard.
+
+Choose “Pipeline” and enter a name for your job.
+
+Click “OK” to create the job.
+
+Configure Pipeline Script in Jenkins:
+In the job configuration, scroll down to the “Pipeline” section.
+
+Choose “Pipeline script from SCM” as the Definition.
+
+Select your version control system (Git, SVN, etc.).
+
+Provide the Repository URL and credentials if necessary.
+
+
+Step #5:Write the Jenkinsfile in your repository to integrate SonarQube with Jenkins pipeline
+Create a Jenkinsfile in your repository with the following content:
+
+pipeline {
+        agent none
+        stages {
+         
+          stage("build & SonarQube Scanner") {
+            agent any
+            steps {
+              withSonarQubeEnv('SonarQube Scanner') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+        }
+      }
+
+
+
+It consists of Stage “build & SonarQube Scanner“:
+
+This stage runs on any available agent (agent any), which means Jenkins will allocate an executor to execute these steps.
+Within this stage, you configure the SonarQube environment with withSonarQubeEnv.
+The sh command is used to execute the Maven build and SonarQube analysis. The provided command runs a clean build (mvn clean) followed by packaging the application and running the SonarQube analysis (mvn package sonar:sonar).
+Make sure to configure your Jenkins job to use this pipeline script. Additionally, ensure that the SonarQube Scanner tool is correctly set up in your Jenkins Global Tool Configuration, and the SonarQube server’s configuration is correct.
+
+Step #5:Run the Jenkins Pipeline
+Save your Jenkinsfile, commit it to your version control system, and then trigger the Jenkins job. The pipeline will automatically fetch your code, build it, analyze it using SonarQube, and enforce quality gates.
+

@@ -1,0 +1,100 @@
+# Create roll and policy and attached to instance-
+1- CloudWatchAgentServerPolicy
+2- AdiministratorAccess
+or AmazonSSMFullAccess
+3- CloudWatchAgentAdminPolicy
+
+# if cloudwatch agent is not installed on server then first we need to install it-
+# To download the CloudWatch agent using Systems Manager--
+Open the Systems Manager console
+
+In the navigation pane, choose Run Command.
+
+Choose Run command.
+
+In the Command document list, choose AWS-ConfigureAWSPackage.
+
+In the Targets area, choose the instance to install the CloudWatch agent on.
+
+In the Action list, choose Install.
+
+In the Name field, enter AmazonCloudWatchAgent.
+
+Keep Version set to latest to install the latest version of the agent.
+
+Choose Run.
+
+Optionally, in the Targets and outputs areas, select the button next to an instance name and choose View output.
+ Systems Manager should show that the agent was successfully installed.
+
+OR-
+# To download the CloudWatch agent using the command line- 
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/installing-cloudwatch-agent-commandline.html
+
+
+1-Update your Amazon Linux instance to pick up the latest changes in the package repositories.
+
+ sudo yum update -y 
+
+2- Install the awslogs package. 
+
+   sudo yum install -y awslogs
+
+3- By default, the /etc/awslogs/awscli.conf points to the us-east-1 Region. 
+To push your logs to a different Region, edit the awscli.conf file and specify that Region.
+
+ vim /etc/awslogs/awscli.conf
+
+4- Edit the /etc/awslogs/awslogs.conf file to configure the logs to track.
+
+vim /etc/awslogs/awslogs.conf
+
+# Edit to check/monitor required log
+agent config file-
+
+[/var/log/messages]
+datetime_format = %b %d %H:%M:%S
+file = /var/log/messages
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/log/messages( we can change the name)
+
+or
+
+state_file = /var/lib/awslogs/agent-state
+[application_logs]
+ region = ap-south-1
+datetime_format = %b %d %H:%M:%S
+file = /var/log/application.log
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/log/application_logs ( we can change the name)
+
+5- Start the awslogs service.
+  sudo service awslogs start
+If you are running Amazon Linux 2, start the awslogs service with the following command.
+
+sudo systemctl start awslogsd
+
+6- (Optional) Check the /var/log/awslogs.log file for errors logged when starting the service.
+
+ vim /var/log/awslogs.log 
+
+7- (Optional) Run the following command to start the awslogs service at each system boot.
+
+  sudo chkconfig awslogs on
+
+If you are running Amazon Linux 2, use the following command to start the service at each system boot.
+
+sudo systemctl enable awslogsd.service
+
+8- cd /var/log
+ls -lrt to see all log
+9- go to clodwatch log and get the logs
+
+10- create cloud watch log filter-
+
+go to log- click on log - create matric filter- filter pattern name error(any name)-then create- create a alarm.

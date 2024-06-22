@@ -1,0 +1,21 @@
+There are Three common Docker network types –
+1) default bridge networks, used within a single host
+2) overlay networks- for multi-host communication it is mostly used in Kubernetes or docker swarm 
+3) macvlan networks- which are used to connect Docker containers directly to host network interfaces
+4) additional - default host network- The host network mode is just that, containers are connected directly to the same network as the host. Containers are not isolated from the network or the host in this mode. The host and the container share all their open ports and network configurations.
+And it use host ip
+# @ when we create docker containers then docker create virtual eithernet network/docker0 also called default bridge network from which container used to connect to the host server
+But if we have multiple containers then all containers will use same virtual eithernet network
+
+By default, one container can communicate to another container using default bridge network in the same host
+
+# But we can create custom bridge network to restrict connectivity between two containers but container created via custom bridge network can communicate with host
+# docker network create networkname  to create cutom bridge network
+# Attach custom bridge network to container, this container will be secure and can not be access by another container in the host
+Hence we can secure the container
+Using ping with another container ip we can check the connectivity and connectivity will be failed.
+docker run -d - -name containername - -network networkname imagename /bin/bash
+Ip address will be different after created custom bridge network
+# docker network ls to check the network details
+
+# Docker inspect containersname to check all details with containers IP

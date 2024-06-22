@@ -1,0 +1,34 @@
+1) AWS Backup-
+AWS Backup lets to centrally manage and automate backups across AWS services and third-party applications.
+
+AWS Backup is a fully managed backup service that makes it easy to centralize and automate the backing up of data across AWS services. 
+With AWS Backup, we can create backup policies called backup plans.
+You can use these plans to define your backup requirements, such as how frequently to back up your data and how long to retain those backups.
+
+
+
+2) Is AWS backup full or incremental?
+  AWS Backup efficiently stores your periodic backups incrementally.
+  The first backup of an AWS resource backs up a full copy of your data.
+  For each successive incremental backup, only the changes to your AWS resources are backed up.
+
+3) 1) AWS BACKUP- With continuous backups, we can restore your AWS Backup-supported resource by rewinding it back to a specific time that you choose, 
+within 1 second of precision (going back a maximum of 35 days). Available for Aurora, RDS, S3, and SAP HANA on Amazon EC2 resources.
+
+4) Copy backup to destination ( CROSS REGION)  
+5) Backup vaults-  Backup vaults are containers where your backups are stored. You can have one default vault or multiple vaults where backups can be stored. 
+
+6) AWS Backup Vault Lock-
+AWS Backup Vault Lock helps protect your vault from accidental or malicious deletion. You can add data retention policies on your vault for governance and compliance purposes.
+
+
+7) What is the difference between backup and replication and snapshot?
+  Snapshots vs. Backups vs. Replication: What's the Difference? |
+  Backups, snapshots, and replication are often confused but are slightly different things with the same ultimate goal of protecting your data. 
+  Backups are for redundancy, snapshots are for fast retrieval, and replication is for minimizing downtime.
+
+8)  What is the difference between backup and replication and snapshot?
+
+"A snapshot is an image of your system/volume at a specific point in time."
+
+"A backup is a copy of your entire system/volume at the time the backup was performed."           

@@ -1,0 +1,46 @@
+# File extension	    File type
+*.DER or *.CER	             Binary
+*.CRT	                     Binary or text
+*.PEM	                     Text
+*.PFX or *.P12	          Binary
+
+
+#  Microsoft Windows servers use .pfx files
+   Apache servers use .crt, .cer
+     Nginx servers use .crt
+
+# Converting certificates between cer/pem/crt/der/pfx/p12 can be done in Linux with the use of OpenSSL tool via the terminal.
+
+These commands allow you to convert certificates and keys to different formats to make them compatible with specific types of servers or software.
+
+Convert a DER file (.crt .cer .der) to PEM
+
+openssl x509 -inform der -in certificate.cer -out certificate.pem
+
+Convert a PEM file to DER
+
+openssl x509 -outform der -in certificate.pem -out certificate.der
+
+Convert a PKCS#12 file (.pfx .p12) containing a private key and certificates to PEM
+
+openssl pkcs12 -in keyStore.pfx -out keyStore.pem -nodes
+
+You can add -nocerts to only output the private key or add -nokeys to only output the certificates
+
+
+# How to Convert Your Certificates and Keys to PEM Using OpenSSL
+There are four basic ways to manipulate certificates — you can view, transform, combine, or extract them. To transform one type of encoded certificate to another — such as converting CRT to PEM, CER to PEM, and DER to PEM — you’ll want to use the following commands:
+
+OpenSSL: Convert CRT to PEM:
+Type the following code into your OpenSSL client:
+
+openssl x509 -in cert.crt -out cert.pem
+
+OpenSSL: Convert CER to PEM
+openssl x509 -in cert.cer -out cert.pem
+
+OpenSSL: Convert DER to PEM
+openssl x509 -in cert.der -out cert.pem
+
+
+# Note:- we can also use converter tool from google to conver the file extention

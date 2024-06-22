@@ -1,0 +1,46 @@
+# How to Install an SSL/TLS Certificate In Microsoft IIS( internet information service)-
+
+1) generate a Certificate Signing Request (CSR) for our website from iis manager and complete the validation process from certificate provider
+ Note:- process is written in another folder
+
+2) 1. Launch IIS server
+server manager- tools -IIS manager-click on server name under the connection section
+
+3) click the Server Certificates icon
+
+4) Click Complete Certificate Request
+In the right Actions menu, click Complete Certificate Request.
+
+5)  Browse to your Server Certificate
+In the Complete Certificate Request wizard, click “…” to browse and select Your Server Certificate file that was previously saved on your server’s desktop.
+
+6) Click OK
+Click OK and the newly installed certificate should appear in the refreshed Server Certificate List
+
+# Binding Your Certificate to Your Website-
+
+1) server manager- tools -IIS manager-click on server name under the connection section
+
+2)  expand your server’s name, expand the Sites folder, and then select the site (e.g. Default Web Site or our own website but before this we need to set website) that you want to secure.
+
+3) ex- client on Default Web Site - In the right Actions menu, click Bindings
+4) Click Add
+@ Input the following
+ In Add Site Bindings, enter the following information:
+
+ Type – Select “https”.
+IP Address – Select “All unassigned”. Now, if you have multiple IP addresses, select the correct one that applies.
+Port – Enter “443” unless you are listening to SSL traffic on another port (e.g. 992).
+SSL Certificates – Select the “friendly name” of the SSL certificate you just installed.  You can always click “View” to confirm the certificates validity details.
+
+5) Click Ok
+
+Congratulations! You’ve successfully installed your SSL certificate! To check your work,
+ visit the website in your browser at https://yourdomain.tld and view the certificate/site information to see if HTTPS/SSL is working properly.
+ Remember, you may need to restart your server for changes to take effect.
+
+
+
+
+
+

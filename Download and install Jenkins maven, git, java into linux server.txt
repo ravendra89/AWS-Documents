@@ -1,0 +1,183 @@
+# Install and download Jenkins on Amazon Linux----
+Note:- Jenkins port 8080 should be open on the server
+
+1) sudo yum update –y
+
+2) Add the Jenkins repo using the following command:
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+3) Import a key file from Jenkins-CI to enable installation from the package:
+
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+4) sudo yum upgrade
+
+5) Install Java (Amazon Linux 2):
+
+sudo amazon-linux-extras install java-openjdk11 -y
+
+6) Install Java (Amazon Linux 2023):
+
+sudo dnf install java-11-amazon-corretto -y
+
+7) Install Jenkins:
+sudo yum install jenkins -y
+
+8) Enable the Jenkins service to start at boot:
+sudo systemctl enable jenkins
+9) Start Jenkins as a service:
+sudo systemctl start jenkins
+10) You can check the status of the Jenkins service using the command:
+sudo systemctl status jenkins
+
+# Install and download Jenkins on Red hat Linux----
+Note:-  Download Jenkins 2.414.1 LTS for:
+1)  yum update
+2)  sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+3)  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+4)  yum install fontconfig java-11-openjdk
+5)  yum install jenkins
+6) Enable the Jenkins service to start at boot:
+   sudo systemctl enable jenkins
+7) Start Jenkins as a service:
+   sudo systemctl start jenkins
+8) You can check the status of the Jenkins service using the command:
+   sudo systemctl status jenkins
+
+# Install and download Jenkins on Ubuntu/Debian Linux----
+Note:-  Download Jenkins 2.414.1 LTS for:
+
+1) sudo apt-get update
+2) curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+    /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+3) echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+4) sudo apt-get update
+5) sudo apt-get install fontconfig openjdk-11-jre
+6) sudo apt-get install jenkins
+
+
+
+
+
+
+
+# command to check java path in amazon linux, redhat and ubuntu-
+@ Method 1
+readlink -f $(which java)- we can use in ubuntu
+or
+readlink -f `which java`
+out put- /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/java
+Note:- copy and configure only till /usr/lib/jvm/java-17-amazon-corretto.x86_64
+
+# Method 2
+
+whereis java
+Output- java: /usr/bin/java /usr/share/java /usr/share/man/man1/java.1.gz
+
+@ Now we know that java is present at /usr/bin/java.
+Next, check if the above path is actual file location or just a symbolic link
+
+ ls -l /usr/bin/java
+
+output- lrwxrwxrwx 1 root root 22 Sep 19 07:07 /usr/bin/java -> /etc/alternatives/java
+
+As we can see, /usr/bin/java is a symbolic link that points to /e/tc/alternatives/java.
+We repeat the above ls command for the destination of symbolic link.
+
+output-
+lrwxrwxrwx 1 root root 43 Sep 19 07:07 /etc/alternatives/java -> /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+
+Now we know that the actual JDK location is-
+
+/usr/lib/jvm/java-11-openjdk-amd64
+
+# Method 3
+readlink -f /usr/bin/javac ----its not for ubuntu
+/usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/javac
+note:- copy and configure only till /usr/lib/jvm/java-17-amazon-corretto.x86_64
+# to check maven directory path-
+whereis maven
+/usr/share/maven
+
+# to check git directort path-
+ whereis git
+ /usr/bin/git 
+@ after install maven java and git need to configure it on jenkins global tool configurstion but no need to mention git path
+jenkins will Atomatically consider it but untick the automatically install box into the jenkins global tool configuration
+
+@ menition the name-
+java-  Java_Home
+MAVEN- Maven_Home
+@ untick the automatically install box on each
+
+
+@ install git-
+yum/apt install git/git-core -y
+
+@ install git-
+yum/apt install maven -y
+
+# to check version-
+1- java --version
+openjdk 11.0.20-  currently using
+2-  mvn -v
+Apache Maven 3.6.3 -   currently using
+
+3- git --version
+git version 2.34.1   currently using
+
+4- jenkins --version
+2.401.3 currently using
+
+
+
+
+# For Ubuntu--
+1) apt list --installed to list all installed packages on Ubuntu
+2) apt list apache2   To display a list of packages satisfying certain criteria such as show matching apache2 packages
+3) apt list --upgradeable    to get a list of all upgradeable packages
+4) sudo apt-cache search openjdk   to check java package
+
+
+# For redhat linux or other
+
+1) sudo yum list installed/ sudo yum list --installed | more   to Show information about all installed packages
+or
+sudo yum list installed
+sudo yum list installed | more
+2) sudo yum list installed | wc -l  To count all installed packages
+3) sudo yum list installed > my_list.txt to save all installed packages names in a file
+4)  find out if nginx installed or not:
+sudo yum list --installed | grep nginx
+## OR ##
+yum list installed | grep nginx
+
+5) to lists extras packages installed on the system that are not available in any known repository? Try:
+sudo yum list --extras
+
+6) Lists all packages known to us:
+sudo yum list --all
+
+7) show available packages, run:
+sudo yum list --available
+
+# Jenkins log file location
+  var/log/jenkins/
+@ Jenkins also provides a web-based interface to view job logs. we can access this by going to the Jenkins dashboard, selecting the specific job, 
+and then choosing the build number you are interested in.
+
+# By default logs can be viewed by running journalctl -u jenkins.service.
+
+To customize the log location, run systemctl edit jenkins and add the following:
+
+[Service]
+Environment="JENKINS_LOG=%L/jenkins/jenkins.log"
+
+
+
+
+

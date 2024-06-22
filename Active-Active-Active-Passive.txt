@@ -1,0 +1,9 @@
+Active-Active High Availability Cluster
+An active-active cluster typically comprises at least two nodes, both actively running the same kind of service simultaneously. The primary purpose of an active-active cluster is to achieve load balancing. Load balancing distributes workloads across all nodes to prevent any single node from getting overloaded. Because more nodes are available to serve, there will also be a marked improvement in throughput and response times.
+
+Active-Passive High Availability Cluster
+Like the active-active cluster configuration, an active-passive cluster also consists of at least two nodes. However, as "active-passive" implies, not all nodes will be active. In the case of two nodes, for example, if the first node is already active, the second node must be passive or on standby.
+
+Aws route 53 provide
+1) Active-active and active-passive failover
+2) Load balancer

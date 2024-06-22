@@ -1,0 +1,16 @@
+# changes management
+The main intention of all changes  management is delivering business value and focused on optimizing business risk,  maximizes productivity, minimizing wasted effort or cost. 
+The AWS Cloud enables automation that optimizes this business risk by: 
+	•	Minimizing the possibility of human error, 
+	
+	•	Removing the requirement to submit changes to scale infrastructure to meet business demand, and 
+	•	Automatically recovering from failure and rolling back failed changes.
+
+Ex- 1) ASG- Failures can be automatically detected using predefined health checks, and servers can be automatically replaced with exactly the same configuration.
+
+Ex-2) Auto Scaling groups can also be used to automatically provision additional resources to meet business demand.
+ Aws config - can be used to assess, audit and evaluate the configuration of AWS resources allowing you to continuously monitor and record AWS resource configurations. With AWS Config, review the resource dependencies prior to making changes.
+
+@ AWS Systems Manager Change Manager simplifies the way you request, approve, implement, and report on operational changes to your application configuration and infrastructure on AWS and on premises.
+
+ Change management practices are designed to reduce incidents and meet regulatory standards. These practices ensure efficient and prompt handling of changes to IT infrastructure and code. Modern change management methodologies can include rolling out new services, managing current ones, resolving problems in code, breaking down silos, providing context and transparency, eliminating bottlenecks, and minimizing risk.

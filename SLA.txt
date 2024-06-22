@@ -1,0 +1,37 @@
+
+# SLA ( service-level agreement) is an agreement between a service provider and a customer
+
+This agreement provides all the information and details regarding the products and services that the service provider must provide to their customers or clients. 
+SLA also provides the basis on which services can be measured and whether the expectation of the client has been met or not.
+
+
+1) Customer-level SLA
+
+A customer-based SLA is an agreement that covers all of the services used by a customer. 
+A customer service level agreement covers specific details of services, provisions of service availability,
+ an outline of responsibilities, escalation procedures, and terms for cancellation.
+
+2) service-level agreement-
+
+A service-level agreement defines the level of service you expect from a vendor.
+
+3) Multi-level SLA
+
+This type of agreement is split into multiple levels that integrate several conditions into the same system. 
+This approach is suitable for providers that have many customers using their product at different price ranges or service levels. 
+These differing service levels can be built into a multi-level SLA.
+
+
+
+SLA best practices-
+
+1) response time should be fast
+
+2) resolved the issue on time
+
+3) maintains Transparency and best relationship with the customer 
+
+4) service performance should be best
+5) Security. All security service that has taken by the customer should defined .
+
+# using above things, we can avoid Escalation procedures and avoid Penalties for failure to achieve SLA metrics.

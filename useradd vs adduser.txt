@@ -1,0 +1,11 @@
+# useradd vs adduser-
+
+1) useradd is native binary compiled with the system. But, adduser is a perl script which uses useradd binary in back-end
+
+2) adduser serves as a front-end for useradd
+
+3) The useradd command is lower level and available on all Linux distributions. It requires additional parameters to set up the account entirely.
+
+The adduser command is higher level and not available on all Linux distributions. The command adds a user to the system with standard settings.
+
+# deluser username to delete username

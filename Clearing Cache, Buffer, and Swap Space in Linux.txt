@@ -1,0 +1,58 @@
+Memory cache is a component of the system’s RAM that stores frequently accessed data, allowing for faster retrieval and reduced load times. When a program or file is accessed, 
+the system checks the cache before retrieving data from the slower storage devices like hard drives or SSDs. This process improves overall system performance and responsiveness.
+
+However, as time goes by, the cache can become filled with unnecessary or outdated data, leading to reduced system efficiency. 
+In such cases, clearing the memory cache can help regain lost performance.
+
+
+Cached memory is memory that Linux uses for disk caching. However, this doesn't count as "used" memory, since it will be freed when applications require it.
+ Hence you don't have to worry if a large amount is being used.        
+
+
+
+# free -h   to check memory space
+
+# To clear PageCache only, run the following commands in the terminal:
+sudo sync && echo 1 | sudo tee /proc/sys/vm/drop_caches 
+or
+sudo sh -c 'echo 1 >  /proc/sys/vm/drop_caches'
+
+                                                                                          
+#  To clear dentries and inodes only, run the following commands in the terminal:
+
+sudo sync && echo 2 | sudo tee /proc/sys/vm/drop_caches   
+
+or
+
+sudo sh -c 'echo 2 >  /proc/sys/vm/drop_caches'   
+
+
+
+# Clear Dentries, Inodes, and PageCache:
+
+sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches 
+
+or
+
+sudo sh -c 'echo 3 >  /proc/sys/vm/drop_caches'  
+
+
+
+
+
+
+
+@ Shared memory is used to share the same resources between multiple processes.
+
+
+@ Swap memory-
+Swap is a space on a disk (it is located on disk) that is used when the amount of physical RAM memory is full.
+
+
+
+# To clear swap space, you can use the swapoff command with the -a option, which will disable all swap partitions.
+
+sudo swapoff -a
+# Then, turn it back by running the following command, which will activate all swap partitions.
+
+sudo swapon -a

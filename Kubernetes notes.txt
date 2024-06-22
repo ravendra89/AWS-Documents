@@ -1,0 +1,97 @@
+# What is the difference between ConfigMaps and Secrets in Kubernetes? 
+ConfigMaps are used to store non-sensitive configuration data, such as environment variables or configuration files. Secrets, on the other hand, are designed for storing sensitive information like passwords, API keys, or TLS certificates.
+# Each Pod has a single IP address assigned from the Pod CIDR range of its node. This IP address is shared by all containers running within the Pod, and connects them to other Pods running in the cluster. Each Service has an IP address, called the ClusterIP, assigned from the cluster's VPC network.
+# DaemonSet- 
+If we create pod using  DaemonSet  then Daemon set will deploy copy of pod in each nods with cluster automatically. 
+in future, if we will add new node the daemonset automatically deploy the pod in new node automatically. ensures that all (or some) Nodes run a copy of a Pods .
+
+# if we want to access to pod within cluster then we can use localhost:containe port.
+
+# Providers allow Terraform to interact with cloud providers, SaaS providers, and other APIs.The providers are specified in the Terraform configuration code. They tell Terraform which services it needs to interact with
+
+# The simplest way to allow external access is to change the service's type to NodePort . NodePort adds an access port to a ClusterIP . NodePort :
+ Exposes the Service on each Node's IP at a static port (the NodePort ).
+
+# The network plugin is configured to assign IP addresses to Pods.
+# The kube-apiserver is configured to assign IP addresses to Services.
+# The kubelet or the cloud-controller-manager is configured to assign IP addresses to Nodes.
+ 
+
+# Kubernetes 1.29 supports Container Network Interface (CNI) plugins for cluster networking. You must use a CNI plugin that is compatible with your cluster and that suits your needs. Different plugins are available (both open- and closed- source) in the wider Kubernetes ecosystem.
+GitHub - containernetworking/cni: Container Network Interface - networking for Linux containers
+Container Network Interface - networking for Linux containers - containernetworking/cni
+
+# Container Network Interface (CNI) it is a default kubernetes plugin whick is used to assign ip to pod
+ GitHub - containernetworking/cni: Container Network Interface - networking for Linux containers
+ Container Network Interface - networking for Linux containers - containernetworking/cni
+# [3/13 9:55 PM] Ravendra Tiwari
+Working with kubeconfig and kubectl-
+
+To begin interacting with our Kubernetes clusters through our local machine, we will need to install kubectl binary.
+
+The kubectl command-line tool uses the kubeconfig file to access and communicate with our Kubernetes clusters. We can use this tool to view logs and access/inspect clusters.
+[3/13 10:07 PM] Ravendra Tiwari
+A Kubeconfig is a YAML file with all the Kubernetes cluster details, certificates, and secret tokens to authenticate the cluster. You might get this config file directly from the cluster administrator or from a cloud platform if you are using a managed Kubernetes cluster.
+
+When you use kubectl, it uses the information in the kubeconfig file to connect to the kubernetes cluster API. The default location of the Kubeconfig file is $HOME/.kube/config
+
+Also, kubernetes cluster components like controller manager, scheduler and kubelet use the kubeconfig files to interact with the API server.
+[3/13 10:10 PM] Ravendra Tiwari
+Different Methods to Connect Kubernetes Cluster With Kubeconfig File-
+
+Method 1: Connect to Kubernetes Cluster With Kubeconfig Kubectl Context
+
+To connect to the Kubernetes cluster, the basic prerequisite is the Kubectl CLI plugin. If you don’t have the CLI installed, follow the instructions given here.
+
+Now follow the steps given below to use the kubeconfig file to interact with the cluster.
+
+Step 1: Move kubeconfig to .kube directory.
+
+Kubectl interacts with the kubernetes cluster using the details available in the Kubeconfig file. By default, kubectl looks for the config file in the /.kube location.
+
+Let’s move the kubeconfig file to the .kube directory. Replace /path/to/kubeconfig with your kubeconfig current path.
+
+mv /path/to/kubeconfig ~/.kube
+
+Step 2: List all cluster contexts
+
+You can have any number of kubeconfig in the .kube directory. Each config will have a unique context name (ie, the name of the cluster). You can validate the Kubeconfig file by listing the contexts. You can list all the contexts using the following command. It will list the context name as the name of the cluster.
+
+kubectl config get-contexts -o=name
+
+Step 3: Set the current context
+
+Now you need to set the current context to your kubeconfig file. You can set that using the following command. replace <cluster-name> with your listed context name.
+
+kubectl config use-context <cluster-name>  
+
+For example,
+
+kubectl config use-context my-dev-cluster
+
+Step 4: Validate the Kubernetes cluster connectivity
+
+To validate the cluster connectivity, you can execute the following kubectl command to list the cluster nodes.
+
+kubectl get nodes
+
+
+Method 2: Connect with the KUBECONFIG environment variable
+
+You can set the KUBECONFIG environment variable with the kubeconfig file path to connect to the cluster. So wherever you are using the kubectl command from the terminal, the KUBECONFIG env variable should be available. If you set this variable, it overrides the current cluster context.
+
+You can set the variable using the following command. Where dev_cluster_config is the kubeconfig file name.
+
+export KUBECONFIG=$HOME/.kube/dev_cluster_config
+
+Method 3: Using Kubeconfig File With Kubectl
+
+You can pass the Kubeconfig file with the Kubectl command to override the current context and KUBECONFIG env variable.
+
+Here is an example to get nodes.
+
+kubectl get nodes --kubeconfig=$HOME/.kube/dev_cluster_config
+
+Also, you can use,
+
+KUBECONFIG=$HOME/.kube/dev_cluster_config kubectl get nodes

@@ -1,0 +1,42 @@
+ # First, upgrade the volume size on console level.
+
+1) check the partition on server 
+lsblk
+2) create new partition-
+
+fdisk /dev/xvdf
+
+3) Use below command to inform to os to read the new partition table-
+partprobe /dev/xvdf
+4) make file system-
+  mkfs.xfs /dev/xvdf1
+5) check file system type-
+ lsblk -f
+6) create directory
+ sudo mkdir /data
+7) mount the volume partition-
+ mount /dev/xvdf1 /data
+8) now check filesyatem 
+ df -h
+9) check the block id of new partition-
+ blkid
+10) make a entry in configuration file to save mount point on permanently basis-
+ cat /etc/fstab     to check existing mount file entry
+11) no make a entry in below file-
+ vi /etc/fstab
+ex- UUID=2bebcb11-b28e-4409-b1dd-8374c85cc602       /data      xfs    defaults  0 0
+
+12) use below command to check if all the mounted configuration has been done correctly. if not done correctly then it will show errort-
+ mount -a
+
+@ to check the filesystem type using below one commands-
+
+  file -sL /dev/xvdf1
+  mount
+  findmnt
+  lsblk -f
+
+
+
+
+ 

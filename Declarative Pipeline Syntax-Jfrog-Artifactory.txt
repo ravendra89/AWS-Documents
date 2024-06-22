@@ -1,0 +1,73 @@
+@#need to specify git checkout and mvn step on the pipeline 
+
+
+
+
+
+# stage ('artifactory-server'){
+steps{
+rtServer (
+    id: 'Artifactory-1',
+    url: 'http://my-artifactory-domain/artifactory',
+        // If you're using username and password:
+    username: 'user',
+    password: 'password',
+        // If you're using Credentials ID:
+        credentialsId: 'ccrreeddeennttiiaall',
+        // If Jenkins is configured to use an http proxy, you can bypass the proxy when using this Artifactory server:
+        bypassProxy: true,
+        // Configure the connection timeout (in seconds).
+        // The default value (if not configured) is 300 seconds: 
+        timeout: 300
+           )
+     }
+}
+
+
+Note:- 1) Need to install Artifactory plugins in jenkins
+       2) go to configure system and setup artifactory credentials
+       3)  id: 'Artifactory-1', >> this is artifactory server name id that we specified in the jenkins configure system ( any name)
+           url: 'http://ServerIP/artifactory', >>  this is artifactory server URL
+       4) Artifactory Username & Password
+          username: 'user',
+          password: 'password',
+
+ # Upload Files - Declarative Pipeline Syntax
+
+stage ('upload'){
+steps{
+rtUpload (
+    serverId: 'Artifactory-1',
+    spec: '''{
+          "files": [
+            {
+              "pattern": "*.war",
+              "target": "new-repository-snapshot-local/"
+            }
+         ]
+ }''',
+
+)
+}
+}
+
+stage ('publish build info'){
+steps{
+rtPublishBuildInfo (
+    serverId: "Artifactory-1"
+)
+}
+}
+
+
+
+
+Note:- 
+1) serverId: 'Artifactory-1',  >>  this is artifactory server name id that we specified in the jenkins configure system ( any name)
+2) go to artifactory server and create artifactory for selecting package type like maven-
+
+quick setup- select package type like maven-give the repository name- create repository
+
+copy complete name anf mention on the pipeline script-
+"target": "new-repository-snapshot-local/"
+

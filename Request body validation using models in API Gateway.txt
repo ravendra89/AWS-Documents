@@ -1,0 +1,52 @@
+
+# Json code for backend (ex. lambda)
+
+{
+  "contractors": [{
+    "On site": 70,
+    "Total contractors": 200
+  }
+    ],
+  "permanent":[{
+    "On site": 100,
+    "Total Employees": 1000
+  }]
+}
+
+@ Below is the complete code for lambda-
+
+import json
+def lambda_handler(event, context):
+    print(event)
+    status = event["body-json"]["status"]
+    
+    response= {
+
+           "contractors":[{
+               "On site": 70,
+               "Total contractors": 200
+           }],
+           "permanent": [{
+               "On site": 100,
+               "Total Employees": 1000
+               
+           }]}
+   
+    return {
+        'statusCode': 200,
+        'body': response[status]
+    }
+
+
+
+
+# Json code for API (Model)
+{
+ "$schema": "http://json-schema.org/draft-04/schema#",
+ "title": "Employees status",
+ "type" : "object",
+  "properties" : {
+    "status": {"type": "string", "enum": ["permanent", "contractors"]}
+     },
+  "required" : [ "status" ]
+}

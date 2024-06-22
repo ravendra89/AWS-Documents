@@ -1,0 +1,32 @@
+# Compress(reduce file size ) & Decompress files-- it is required when we want to copy file to another location 
+and our file size is to large. so we can reduce the size first then copy after that Decompress the file( means make actual file size)
+
+1) compress the file-
+gzip filename
+ls -lrt  to check file size
+
+2) Decompress files
+gunzip filename
+or 
+gzip -d filename
+
+# tar command-   any folder or file ( means we can zip or reduce the folder or file size)-
+
+tar cvf (mentionanynameforfile) (folder or file name)
+@ now gzip the file--
+
+gzip tarfilename
+
+@ now extract the file from tar.gz file--
+
+tar xvf (tar.gz file name)
+
+
+# we can use below command to extract, untar and unzip the file with same command--
+
+tar -xvzf (tar.gz file name)
+
+@ use unzip command-
+
+unzip ( unzip file name)
+

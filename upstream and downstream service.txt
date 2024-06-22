@@ -1,0 +1,7 @@
+
+What is upstream and downstream service in a microservices based architecture such as Kubernetes:- 
+ 
+I already know that upstream services are those that do not depend on any other services and downstream services depend on the upstream services.
+ For example, the front-end would be a downstream service to the backend as it depends on it.                                                                
+ The services that provide data or functionality to other services are referred to as “upstream” services, 
+ while the services that consume data or functionality from other services are called “downstream”

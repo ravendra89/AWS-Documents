@@ -1,0 +1,273 @@
+
+FOR LINUX BASE SYSTEM-----
+
+
+lscpu                to check cpu count (core)
+htop                 to check cpu usage
+for ubuntu-          sudo apt-get install htop
+iostat               to check cpu usage
+iostat -c            to check cpu usage 
+
+free -g              to check memory space in gb.
+free -m              to check memory space in mb.
+free -g/h/mh         to check RAM utilization in server
+htop                 to check ram usage
+top                  to check ram usage
+@ last reboot        to check last reboot logs status
+
+
+df -hT --tot         to chech disk space
+@ to check disk utilization report-
+df -h or  df --help
+find output-
+/dev/sda1 - disk name
+@ To check complete information of the server-
+cat /root/supporthelp/serverinfo-13042022
+@ fdisk -l/sfdisk -l  to check disk partition.
+
+@ . Using ncdu
+Another CLI-based tool you can use to check the disk usage in Linux is ncdu. Unlike df,
+ ncdu is not installed in most Linux distributions by default. If you use a Debian-based distro, 
+you can install this tool by typing the following command (I use Ubuntu in this case).
+
+$ sudo apt install ncdu
+
+@ df 
+through df tool we can check the disk usage
+
+
+# cat /etc/os-release  to check os version
+# uname -r             to check Linux kernel version
+# hostname -i/I     TO check server ip
+
+@ type "hostname"  to check server hostname/VM name
+or
+hostnamectl
+or
+cat /proc/sys/kernel/hostname
+
+postgres -V          to check database
+
+OR
+psql -V            TO CHECK DB VERSION AND NAME ( important)
+## lsblk  to check disk partition
+## check linux port enable/listen or unconn/disable------
+
+ sudo netstat -tulpn | grep LISTEN    To check only (list open ports) listening/enable port.
+
+sudo ss -tulw  to check complete port status
+or
+sudo ss -tulwn
+# ipconfig /all to check dns information( physical address is dns)
+## check latency-
+traceroute ip port
+or 
+ping ip enter
+
+##  netstat -an to check to see which ports are listening.
+or
+# netstat -nltup to check enabled port
+or
+#  netstat -ap | grep http/https/(80/443) important
+
+##### Use ss command to display all open TCP and UDP ports in Linux.
+             OR
+#### use the netstat command to list all ports in Linux.
+## To see the domain part of the FQDN (Fully Qualified Domain Name), enter:
+$ dnsdomainname
+## go to root user-
+sudo su -
+# check the data
+cd /var/data/
+ls
+@@ Ubuntu os upgradation process-
+1- Login the server
+2- Fetch update software list by running- "sudo apt-get update"
+3- need to take a backup of the server
+4- update ubuntu os software by using command- "Sudo apt-get upgrade"
+5- if required then reboot the server by using command- sudo reboot
+6- check the latest os version
+@@ centos & redhat os upgradation process-
+1- check the current os version
+2- verify data and backup.
+3- check for available updates-
+"sudo yum check-update"
+4- package manager cleanup- sudo yum clean all
+5- reboot the server- reboot
+6- update os- sudo yum update
+7- check current os version
+
+### SERVER KA LOAD HIGH HO RHA MEANS CPU KA USE MAXIMUM HO RHA.
+
+
+### what is Linux Server Load.?
+Linux Server Load refers to the average work being done by a web server in a given amount of time. 
+It is generally specified in averages of the last 5 minutes, 10 minutes, and 15 minutes.
+## A higher average server load means that the CPU is being used more, and obviously, access to the server is slow. Apart from this, 
+the memory usage of the system is also considered when server load is being referred to.
+ A server system that runs out of memory can result in its shutdown.
+
+####  uptime--- Check Linux Server Load Using Uptime Command----
+The main purpose of the uptime command in Linux is to show how long the system has been on, i.e., 
+the time elapsed since the last boot. However, it also gives a very quick overview of the load on the system.
+output--the load averages, 0.06, 0.03, and 0.00.
+As mentioned before these are three averages for the last 1, 5, and 15 minutes. They show the percentage of CPU used in those durations.
+
+Hence, 0.06 means 6% average use of CPU in the last minute, 0.03 means 3% average use of CPU in the last 5 minutes.
+ 0% average use of CPU signifies extremely less use over the span of 15 minutes, which can often be the case if the system is kept in suspend mode.
+@@ Best Patch Management Tools for Linux-
+1. ManageEngine Patch Manager Plus- ManageEngine Patch Manager Plus is a patch management solution that can manage Linux, Windows.
+2. Syxssense Manage.
+3. Ivanti.
+4. GFI LanGuard.
+5. Automox.
+@ Linux patch management-
+ Linux patch management is the process of managing patches for applications running on Linux computers.
+ Managing patches in Linux involves scanning your Linux endpoints to detect missing patches, downloading patches from vendors' sites,
+ and deploying them to the respective client machines.
+
+For windows base system -----
+@ For latency report- go to task manager-disk- performance
+@ TO CHECK CPU,MEMORY,DISK, SPACE AND UTILIZATION---
+TASK MANAGER-PERFORMANCE-CHECK
+@ TO check network connectivity- run- ncpa.cpl
+@ windows+R to run services.msc and check installed and running service in system
+@ to change the password- press ctrl+alt+del or ctrl+alt+end if we are logged in to the windows server through via RDP- Select change a password.
+or
+go to user account- change account setting-sign in option-then changed password
+@ To create new user on the server- Local admin user account has to be created through two main opreation-
+1- create one new user in local user
+2- group user
+steps- server manager-tools-computer management-localuser & group- user-new user -create-once we have created user we will need to add it into
+the Administrator role- computer management-local user and group-group-double click Administrator-click Add-select object type( group or user or built-in security principals)-
+select location( new user name/server name)-in below box click on check names and ensure its valid- click OK.
+or
+press windows+x-computer management-click on local user and group-right click on user-new user thent create-once we have created user we will need to add it into
+the Administrator role- computer management-local user and group-group-double click Administrator-click Add-select object type( group or user or built-in security principals)-
+select location( new user name/server name)-in below box click on check names and ensure its valid- click OK.
+
+
+Open CMD and run below command or cmd-right click-open run as administrator-select esds user and type password then use below command.
+
+diskmgmt.msc     To check disk space
+OR
+Computer management-storage-disk management-check server disk space
+@ check the network latency-
+Test Network Latency Windows
+
+How to Test Network and Internet Latency (Lag) in Microsoft Windows - Using Windows Command Prompt
+
+Access the Command Line Prompt.
+Run Ping Loopback test.
+Run Ping to a remote server.
+Run Traceroute/tracert ip test. 
+note- latency limit should be-
+1ms internal netwoek
+Under 20ms external network 
+
+@ to check hostname
+open CMD-type " cmd /k hostname
+
+# TO CHECK windows OS name and version----
+
+window logo key + R - type "winver" and check
+
+OR
+setting-system-about to check os name and version
+
+Find hard disk type-------
+
+device manager-disk
+or
+task manager-fewer details-more detail-performance-disk
+or
+go to powershell and open
+type command- get-physicaldisk | format-table -autosize
+
+output-- complete disk type detail,disk storage HDD Hai ya ssd
+
+this above process we can check disk storage type hdd or ssd.
+
+## TO CHECK Computer Name, Domain, and Workgroup Settings"----
+click on start- right click on computer/this pc- then check.
+
+# Window server 2016
+Go to cmd and type 
+netstat -an | find /i "listening"
+Or
+netstat -an |find /i "established"
+or
+netstat -an -p TCP | find /I "listening" to check which port are being listened in the server.
+or
+netstat -a to see if among the list of ports being listed.
+0r
+netstat -an to check to see which ports are listening.
+
+@ Change the password on window server2012-
+computer management- local user and group-user- right click on administrator
+@  Change the password on window server2016/2019-
+Press the windows key+ i -windows settings- accounts-sign in option-scroll to the password section and click change- next.
+
+@ check Enabled port on above command.if Server is fresh then only show tcp/UDP port will not show http/https port 
+because server is fresh server par http and https se related service use nhi hui Hai isliye nhi show hoga.
+OR
+and select Run as administrator. Now, type “netstat -ab” and hit Enter. Wait for the results to load,
+ port names will be listed next to the local IP address.
+
+
+##  HOW TO ENABLE PORT--
+Opening Ports in Windows Firewall----
+
+From the Start menu, click Control Panel, click System and Security, and then click Windows Firewall. ...
+Click Advanced Settings.
+Click Inbound Rules.
+Click New Rule in the Actions window.
+Click Rule Type of Port.
+Click Next.
+On the Protocol and Ports page click TCP.
+
+## how to check antivirus--
+go to contro panel- program-program and features-see all program list.
+now search antivirus in start menu and open antivirus application and do on and off.
+## how to enabled antivirus in windows 10...
+start-setting-update & security -windows security-virus & theat protection-select manage setting/open apps and now enabled or disable antivirus.
+## How to turn off/on windows firewall on windows server 2012--
+click on the server manager from the task bar-click the tools menu and select windows firewall with advance security-to see current configuration settings
+ by selecting windows firewall properties from the mmc.to modify the setting for each of the three firewall profiles,
+ which are-domain,privateand public and ipsec setting.-applying custom rules which will include inbound rules and outbound rules under the
+windows firewall with advance security-right clicking a rule will allow enable/disable.
+
+# Bandwidth-
+Bandwidth is measured as the amount of data that can be transferred from one point to another within a network in a specific amount of time. Typically, 
+bandwidth is expressed as a bitrate and measured in bits per second (bps).
+
+@ how to set disply light on pc-
+windows-search(power & sleep setting) - then set
+@@ windows Patch-
+# Windows server patch management tools-
+1- SolarWinds Patch Manager.
+2- Syxsense Patch Management.
+3- ManageEngine Patch Manager Plus.
+4- NinjaRMM.
+
+windows patch management is the process of managing patches for microsoft windows.
+patches are a type of code that is inserted or patched into the code of an existing software program.
+It is typically a stop-gap measure untill a new full release of the software becomes available.
+@ check if any thing required for updation or any patches has pending-
+setting-update & security- windows update- clich check for update.
+@ How do i see what patches are installed on windows server 2016-
+windows + r - appwiz.cpl - ok
+we can also install and update if anything is pending
+@ for windows 2019- 
+windows + r - systeminfo.exe 
+or
+cmd-wmic qfe
+we can also install and update if anything is pending
+@ for windows 2012
+setting-update & security- windows update- clich check for update.
+@ note- server reboot is required after install patch or os-
+
+## open cmd and type : systeminfo" to find all patches report for all windows server. means apply systeminfo command and pull back a load of statistics
+ about our system including what patches are installed.
+
+

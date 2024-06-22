@@ -1,0 +1,119 @@
+For ubuntu-
+sudo apt-get update
+sudo apt-get install nginx
+nginx -v ----to check nginx version
+nginx -t ---- to check configuration status 
+# nginx root home directory 
+cd /var/www/html
+@ remove html and create directory and within directort create or copy index.html file
+
+or
+# copy index.html application in server home user--
+
+now copy html application through filezila
+or
+now go to powershall and go to directory 
+cd downloads
+scp -i .\(pem key name).pem file/application name ec2-user or ubuntu@ip/dns url:update(directory name)   
+now go to server and check transfer file through ls
+# now move application or file to server destination /var/www/ravendra.co 
+
+change to roor user
+sudo su---home directory should be this form (root@ip-172-31-47-215:/home/ubuntu#)
+then ls 
+create folder and copy application into this folder
+then copy or move this folder into /var/www (using cp -r command or mv command)
+
+or cp -r filename/foldername /var/www/
+# 
+cd our content folder name
+vi etc/hosts
+then mention server ip     domain name
+now go to nginx configuration 
+cd /etc/nginx
+# nginx.conf ----- default congiguration
+
+# nginx congiguration---
+cd /etc/nginx
+ls
+cd sites-available
+vim default----we can directly edite in default page  ( Then no need to perform below configure below setup)
+# go to root line and remove html and type our directory name
+# NOTE:- Don't move this(;) into from root directory
+
+
+
+
+# OR
+cd sites-enabled
+ls -ltr
+and unlink default
+
+cd /etc/nginx
+cp site-available/default site-available/ravendra.co
+vi ravendra.co ---- to edite the configuration
+cd site-available
+rm -rf default
+or
+vim sites-available/ravendra.co--- configuration virtual host information in below format
+or cd conf.d
+and vim ravendra.co and configuration virtual host in below format
+vim sites-available/our content/application foldername
+server{
+listen        80;
+server_name   anyservername;or domain name
+location/{
+      root  /var/www/html;--html ko remove karke khud ke application name save karna h
+      index index.html;
+     }
+}
+or
+server {
+listen 80;
+listen [::]:80;
+root /var/www/demo;
+index index.html;
+ server_name _; our content directory name mention here _;
+ location / {
+   try_files $uri $uri/ =404;
+  }
+
+}
+
+
+
+#now move sites-available data into sites-enabled 
+sudo ln -s /etc/nginx/sites-available/our directoryname /etc/nginx/sites-enabled/directortname
+
+then reload nginx service
+systemctl reload nginx
+
+systemctl restart nginx
+
+# for redhat/centos/Amazon Linux--
+# install extra package yum install epel-release
+sudo yum install nginx
+server root directory
+/usr/share/nginx/html
+
+
+# cd /etc/nginx
+vi nginx.conf----  to directly edit the file
+
+and configure virtual host
+because there is no site enabled/availabe folder
+# and follow all above process
+
+# allow firewall---
+sudo ufw apt list---to check all avaible application related firewall
+sudo ufw allow 'nginx full'---- to allow full rule
+sudo ufw allow 'nginx http/https' to allow port
+sudo ufw status---to check firewall status
+sudo systemctl status nginx--- to check nginx status
+deploy application on the server-----
+cd downloads---to check our application on own system
+ls
+
+# check port open or not--
+#ps -ef|grep nginx --- to check how many worket/master process is running
+netstat -nelap |grep :80 or anyport

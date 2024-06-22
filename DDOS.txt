@@ -1,0 +1,7 @@
+# WHAT IS A DDOS ATTACK?
+A Denial of Service (DoS) attack is a malicious attempt to affect the availability of a targeted system, such as a website or application.
+In general, DDoS attacks can be happened Open Systems Interconnection (OSI) Network (layer 3), Transport (Layer 4), Presentation (Layer 6) and Application (Layer 7) Layers.
+
+
+# Aws shield standard is default security service that is default service which protects our aws account from ddos
+Aws shield advance is paid service which provide more protection

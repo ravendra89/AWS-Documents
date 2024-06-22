@@ -1,0 +1,45 @@
+# this setup required when we installed sonarscanner into host machine
+stage('Sonarqube') {
+    environment {
+        scannerHome = tool 'SonarQubeScanner'
+    }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh "${scannerHome}/bin/sonar-scanner"
+        }
+       
+    }
+}
+
+1) Generate project token from sonarqube
+2) install pluggins on jenkins >> SonarQube Scanner
+3) Manage jenkins- system- sonarQubeserver-check on Environment variables-
+click on addsonarQube-
+Name- any name ( sonarqube)
+sonarqube server URL till port in below format
+ http://localhost:9000
+ click on Add-Jenkins
+ kind = secret text- paste sonarqube token here
+ ID & Description > Any name
+ click on add to add token- select token-click on apply and save
+
+4) Install sonar qube scanner into host server OR Click on Intall Automatically into jenkins GUI
+@ From Jenkins Gui- manage jenkins- tools- click on Add SonarQube Scanner- mention any name- check on Install automatically
+5) create pipeline
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

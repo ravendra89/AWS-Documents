@@ -1,0 +1,29 @@
+cloud watch monitor in simple way--
+1- create metricks
+2- select metricks
+3- select resources
+4- select-action-add to dashboard
+5- give name for dashboard
+6- save and go to action and share the dashboard report if required
+Alarms--
+1- create alarm
+2- select metricks
+3- configured alarm
+4- create sns
+creare topic
+create subscription
+select endpoint procol 
+# cloud watch events---
+1- events
+2- click rule
+3- go to amazon eventbridge
+4- create rule
+5- Rule with an event pattern
+6- Build event pattern
+1- Event resource- AWS events or EventBridge partner events
+2- AWS events
+3- Sample event( select any)
+4- Event pattern--
+Event source- aws services
+Aws service - select service
+7- next -select target and create

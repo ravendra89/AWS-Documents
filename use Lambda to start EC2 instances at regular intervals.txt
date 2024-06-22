@@ -1,0 +1,127 @@
+# To use Lambda to start EC2 instances at regular intervals, complete the following steps:
+
+1) Create a custom AWS Identity and Access Management (IAM) policy and IAM role for your Lambda function.
+2) Create Lambda functions that stop and start your EC2 instances.
+3) Test your Lambda functions.
+4) Create EventBridge schedules that run your function on a schedule.
+Note: You can also create rules that react to events that take place in your AWS account.
+
+
+(1)# Create an IAM policy and IAM role for your Lambda function-
+
+@ Use the JSON policy editor to create an IAM policy. Paste the following JSON policy document into the policy editor:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:Start*",
+        "ec2:Stop*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+
+(2) Create an IAM role for Lambda.
+Important: When you attach a permissions policy to Lambda, make sure that you choose the IAM policy that you just created.
+
+(3) Create Lambda functions that stop and start your EC2 instances--
+Open the Lambda console, and then choose Create function.
+
+Choose Author from scratch.
+
+Under Basic information, enter the following information:
+For Function name, enter a name that identifies it as the function that's used to stop your EC2 instances. For example, "StopEC2Instances".
+For Runtime, choose Python 3.9.
+Under Permissions, expand Change default execution role.
+Under Execution role, choose Use an existing role.
+Under Existing role, choose the IAM role that you created.
+
+ Choose Create function.
+
+ On the Code tab, under Code source, paste the following code into the editor pane in the code editor on the lambda_function tab. This code stops the EC2 instances that you identify.
+@ Example function code to start EC2 instances-
+
+import boto3
+region = 'us-west-1'
+instances = ['i-12345cb6de4f78g9h', 'i-08ce9b2d7eccf6d26']
+ec2 = boto3.client('ec2', region_name=region)
+
+def lambda_handler(event, context):
+    ec2.start_instances(InstanceIds=instances)
+    print('started your instances: ' + str(instances))
+
+@ Important: For region, replace "us-west-1" with the AWS Region that your instances are in. For instances, 
+replace the example EC2 instance IDs with the IDs of the specific instances that you want to stop and start.
+
+@ save code and Choose Deploy.
+
+@  On the Configuration tab, choose General configuration, and then choose Edit. Set Timeout to 10 seconds, and then choose Save.
+Note: Configure the Lambda function settings as needed for your use case. For example, to stop and start multiple instances, you might use a different value for Timeout and Memory.
+
+@ Test your Lambda functions-
+Open the Lambda console, and then choose Functions.
+Choose one of the functions that you created.
+Choose the Code tab.
+In the Code source section, choose Test.
+In the Configure test event dialog box, choose Create new test event.
+Enter an Event name. Then, choose Create.
+Note: Don't change the JSON code for the test event. The function doesn't use it.
+Choose Test to run the function.
+
+@ Check the status of your EC2 instances--
+
+1) to check using AWS Management Console-
+You can check the status of your EC2 instances before and after testing to confirm that your functions work as you expect.
+
+2)Check the status of your EC2 instances using AWS CloudTrail-
+Open the CloudTrail console.
+In the navigation pane, choose Event history.
+Choose the Lookup attributes dropdown list, and then choose Event name.
+In the search bar, enter StopInstances to review the results. Then, enter StartInstances in the search bar to review the results.
+If there are no results, then the Lambda function didn't stop or start the EC2 instances.
+
+#(4) Create EventBridge rules that run your Lambda functions-
+Open the EventBridge console.
+Select Create rule.
+Enter a Name for your rule, such as "StartEC2Instances". (Optional) Enter a description for the rule in Description.
+For Rule type, choose Schedule, and then choose Continue in EventBridge Scheduler or select continue to create rule
+For Schedule pattern, choose Recurring schedule.
+Under Schedule pattern, for Occurrence, choose Recurring schedule.
+For Schedule type, choose the type that's right for your need and complete the following steps:
+When Schedule type is Rate-based schedule, for Rate expression, enter a rate value and choose an interval of time in minutes, hours, or days.
+-or-
+When Schedule type is Cron-based schedule, for Cron expression, enter an expression that tells Lambda when to stop your instance. For information on expression syntax, see Schedule expressions for rules.
+Note: Cron expressions are evaluated in UTC. Make sure that you adjust the expression for your preferred time zone.
+In Select targets, choose Lambda function from the Target dropdown list.
+For Function, choose the function that stops your EC2 instances.
+Choose Skip to review and create, and then choose Create.
+
+Note:1- Sometimes, a Lambda function can stop an Amazon EC2 instance and not be able to start it again.
+This can occur when an Amazon Elastic Block Store (Amazon EBS) volume is encrypted and the Lambda role isn't authorized to use the encryption key
+@ ref. link mentioned in the excel sheet
+
+Note:2- Note: You might receive a Client error on launch error after you complete the following steps. 
+@ ref. link mentioned in the excel sheet
+# python code to start instance
+import boto3
+region = 'ap-south-1'
+instances = ['i-0b1169cadccf77248']
+ec2 = boto3.client('ec2', region_name=region)
+
+def lambda_handler(event, context):
+    ec2.start_instances(InstanceIds=instances)
+    print('started your instances: ' + str(instances))

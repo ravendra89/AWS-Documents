@@ -1,0 +1,40 @@
+1- Creare Role
+role - Aws service - EC2 
+AmazonEC2RoleForSSM
+CloudWatchAgentAdminPolicy
+CloudWatchAgentServerPolicy
+2- Assign Role to the server ( Need to install IIS Server )
+3-  Open Systemmanager (SSM)
+4- Run command
+5- Search "AWS-ConfigureAWSPackage" and select it
+6- Document - default
+7- Action - install
+8- Name of Package name
+AmazonCloudWatchAgent
+9- version - latest 
+10- select instance
+Choose instance manually and click on run
+11- Login the server - click on Local disk - click on AmazonCloudWatch Agent
+12 - Open cmd 
+cd downloads
+run the below command
+amazon-cloudwatch-agent-config-wizard.exe
+And setup the Configuration
+and for Log setup copy the path from server directory-
+Local disk -inetpub-logs- copy the log file path and paste into cloudwatch agent configuration
+13- Open SSM- Click on Parameter store and check the Cloudwatch agent configuration file what we done into server.
+14-  Install Cloudwatch Manage Agent-
+    open the system manager 
+15- run command
+16- Search "AmazonCloudWatch-ManageAgent" and select
+17- Document version - default
+18- Action - configure
+19- Mode - EC2
+20 - Optional configuration source - ssm
+21 - Optional Configuration Location - Parameter store name
+22- optional restart - yes
+23- choose the instance manually
+24- Click on Run
+25- Open coludwatch-
+1- Click on log group and check the logs
+2- Click on all metrics and check the resourches utilization

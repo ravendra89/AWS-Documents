@@ -1,0 +1,33 @@
+# IIS 10/Windows Server 2016: Generate CSRs (Certificate Signing Requests)
+
+Before request a certificate validation, we need to use  IIS Manager to generate a Certificate Signing Request (CSR) for our website.
+
+1) In the Windows start menu, type Internet Information Services (IIS) Manager.
+2) Once you have the IIS manager open, go to the Connections panel on the left, click the server name for which you want to generate the CSR.
+3) In the middle panel, double-click Server Certificates.
+4) In the Actions panel on the right, click Create Certificate Request
+5) Enter the following Distinguished Name Properties, and then click Next:
+
+@ Common Name — The fully-qualified domain name (FQDN) — or URL — for which you plan to use your certificate (the area of your site you want customers to connect to using SSL).
+
+@ An SSL certificate issued for www.coolexample.com is not valid for secure.coolexample.com. If you want your SSL to cover secure.coolexample.com,
+ make sure the common name submitted in the CSR is secure.coolexample.com.
+
+@ If you are requesting a wildcard certificate, add an asterisk (*) on the left side of the Common Name (e.g., *.coolexample.com or *.secure.coolexample.com).
+
+@ Organization — The name in which your business is legally registered. The organization must be the legal registrant of the domain name in the certificate request.
+ Note: If you are enrolling as an individual, enter the certificate requester's name in the Organization field, 
+       and the Doing Business As (DBA) name in the Organizational Unit field.
+
+@ Organizational Unit — Use this field to differentiate between divisions within an organization (such as "Engineering" or "Human Resources"). 
+It is not necessary to specify an organizational unit when generating a CSR.
+
+City/Locality — The full name of the city in which your organization is registered/located. Do not abbreviate.
+State/Province — The full name of the state or province where your organization is located. Do not abbreviate.
+Country — The two-letter International Organization for Standardization- (ISO-) format country code for the country in which your organization is legally registered.
+For Cryptographic service provider, select Microsoft RSA SChannel Cryptographic Provider.
+For Bit length, select 2048 or higher, and then click Next.
+
+@ Click …, enter the location and file name for your CSR, and then click Finish.
+
+Note:- Next step for installing the certificate in window server written in anothe folder

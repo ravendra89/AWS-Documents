@@ -1,0 +1,5 @@
+# mvn clean package VS mvn clean install-
+
+mvn clean package command will compile source code and also package it as a jar or war as per pom file and put it  into the target folder(by default).
+mvn clean install command will compile and package, it as a jar or war as per pom file and put it  into the target folder(by default) but it will also put the package in your local repository. So that other projects can refer to it and grab it from your local repository.
+So when you run command mvn install, it runs the commands for all lifecycle phases till install, which includes package as well. So you can say , install phase comes after package phase.

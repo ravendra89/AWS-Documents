@@ -1,0 +1,18 @@
+What is soft link OR Symbolic links-
+The soft link serves as a pointer to another file without the actual  file contents. It allows the users to delete the soft links without affecting the original file's contents.
+You may also use soft links to link files across the file system. Generally, the soft link is an alias for the original file or directory. It helps to redirect to the specified file and directory when accessed via the pathname indicated in the soft link's subject.
+ls -l command shows all links with first column value l? and the link points to original file.
+Soft Link contains the path for original file and not the contents.
+Removing soft link doesn’t affect anything but removing original file, the link becomes “dangling”
+A soft link can link to a directory.
+Link across file systems: If you want to link files across the file systems, you can only use symlinks/soft links.
+Command to create a Soft link is:
+$ ln  -s original filename  link name
+What is Hard link-
+A Hard Link is a copy of the original file that serves as a pointer to the same file, allowing it to be accessed even if the original file is deleted or relocated.
+the hard link remains active even if the source file is deleted from the system.
+On UNIX-based systems, a hard link is just another name for a file that already exists.
+Command to create a hard link is:
+ln  original filename  link name
+ls -l command shows all the links with the link column shows number of links.
+The disadvantage of hard links is that it cannot be created for files on different file systems.

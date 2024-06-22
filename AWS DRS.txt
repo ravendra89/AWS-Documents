@@ -1,0 +1,27 @@
+# AWS DRS
+1. AWS Elastic Disaster Recovery (AWS DRS) minimizes downtime and data loss with fast, reliable recovery of on-premises and cloud-based applications using affordable storage,
+ minimal compute, and point-in-time recovery. Set up AWS Elastic Disaster Recovery on your source servers to initiate secure data replication.
+2. Why we need DR-
+  Natural disasters, cyber attacks, system failures, and even human error can strike at any moment. These put your organization’s critical applications at risk.
+3. What is RTO & RPO in AWS DRS-
+As a quick refresher, RTO stands for Recovery Time Objective and is a measure of how quickly after an outage an application must be available again. RPO, or Recovery Point Objective, refers to how much data loss your application can tolerate. Another way to think about RPO is how old can the data be when this application is recovered? With both RTO and RPO, the targets are measured in hours, minutes, or seconds, with lower numbers representing less downtime or less data loss. Within the context of a Business Continuity Plan, applications having similar RTO targets are grouped together in Tiers, with Tier 0 having the lowest RTO.
+
+When establishing these objectives, keep in mind that recovering an application in 15 minutes (RTO) with less than 1 minute of data loss (RPO) is great, but only if your application actually requires it. This is because having a lower target – faster recovery and/or less data loss – requires additional resources and configuration to accomplish, causing an increase in operational complexity and cost to implement and maintain. Therefore, RTO and RPO targets must be set on an application-by-application basis, and they must be evaluated against the added cost and complexity of the proposed target for each application.
+
+4. difference between Initiate drill and Initiate recovery-
+
+Both are used to test the AWS DRS, we can choose any one to test
+Disaster recovery testing is essential to any DR plan, enabling you to identify and address potential issues before they become real problems
+It is important to plan and execute testing and drills properly.
+To ensure that your disaster recovery plan is effective, we must  test the DRS using Initiate drill or Initiate recovery that covers all the critical components of your infrastructure, applications, and processes. You also need to ensure that your testing and drill processes are well-documented, repeatable, realistic, and reflect real-world scenarios that could impact your operations.
+# Drill means testing of DR
+5. difference between AWS DRS and CloudEndure Disaster Recovery-
+Elastic Disaster Recovery is the recommended service for disaster recovery to AWS. It provides similar capabilities as CloudEndure Disaster Recovery, and is operated from the AWS Management Console. This facilitates seamless integration between AWS DRS and other AWS services, such as AWS CloudTrail, AWS Identity and Access Management (IAM), and Amazon CloudWatch.
+With AWS DRS, you can recover your applications on AWS from physical infrastructure, VMware vSphere, Microsoft Hyper-V, and cloud infrastructure. You can also use AWS DRS to recover Amazon Elastic Compute Cloud (EC2) instances in a different AWS Region.
+You can use AWS DRS to recover all of your applications and databases that run on supported Windows and Linux operating system versions.
+AWS recommend to use CloudEndure Disaster Recovery only if you require one or more of the following capabilities:
+• Replication to an AWS China Region
+• Replication and recovery into AWS Outposts
+March 31, 2024 – CEDR will be discontinued in all AWS Regions excluding AWS China Regions and AWS GovCloud (US) Regions, AMS customers and Outposts.
+
+# AWS Elastic Disaster Recovery (AWS DRS) allows you to perform failover and failback your EC2-based applications from one AWS Region to another AWS Region.

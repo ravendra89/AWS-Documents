@@ -1,0 +1,28 @@
+IST to EST Chart
+
+12:00 am IST (midnight)	02:30 pm EST
+01:00 am IST	03:30 pm EST
+02:00 am IST	04:30 pm EST
+03:00 am IST	05:30 pm EST
+04:00 am IST	06:30 pm EST
+05:00 am IST	07:30 pm EST
+06:00 am IST	08:30 pm EST
+07:00 am IST	09:30 pm EST
+08:00 am IST	10:30 pm EST
+09:00 am IST	11:30 pm EST
+10:00 am IST	12:30 am EST
+11:00 am IST	01:30 am EST
+12:00 pm IST (noon)	02:30 am EST
+01:00 pm IST	03:30 am EST
+02:00 pm IST	04:30 am EST
+03:00 pm IST	05:30 am EST
+04:00 pm IST	06:30 am EST
+05:00 pm IST	07:30 am EST
+06:00 pm IST	08:30 am EST
+07:00 pm IST	09:30 am EST
+08:00 pm IST	10:30 am EST
+09:00 pm IST	11:30 am EST
+10:00 pm IST	12:30 pm EST
+11:00 pm IST	01:30 pm EST
+
+The India Standard Time (IST) is 9.5 hours ahead of Eastern Standard Time (EST).

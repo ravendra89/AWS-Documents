@@ -1,0 +1,11 @@
+ # My self is Ravendra Tiwari, so I have overall 5.8 years experience with Devops & AWS Cloud. I actually working in various Devops tools for build and release even automation orchestration.
+  currently I am working in product base company as a Devops and cloud Engineer where my primary responsibility are Building CI/CD Pipeline with Jenkins CI tools. 
+  such as we do write CI/CD Pipeline for application and integrated multiple stages Like Unit testing, static code analysis,
+  we do create docker Images & pushing Image to docker container image repository & Publishing images, 
+ deploying application into kubernetes and I am even responsible for creating AWS infrastructure using Terraform, 
+ Storing Antifactory to Repository manager such as JFrog Antifactory OR  Sonar type nexus in the pipeline. apart from this we are working on Ansible, Shell & Python scripting.
+ During Overall activity,  I deal with so many team. So, this is brief intro about my self. 
+
+What is your day to day activity- So, I generally do CI/CD task even an automation so its depends on the team, requirement and release. so we do work 70% in CI/CD pipeline and 30% do testing. actually we are supporting multiple development team.
+
+In our organization, mostly I am using GitHub as a SCM tools So, whenever developers commit code changes to GitHub, so, we had configure GitHub pipeline with CI tools and then pipeline automatically trigger where we have multiple stages such as SCM checkout, Maven build, static code analysis so in our case we first scan our antifactory for any type of vulnerability or bugs once our build artifact pass the static code analysis, our next step is to build the docker image, pushing the image to docker private repository and then deploying container application to kubernetes using Jenkins pipeline. 

@@ -1,0 +1,5 @@
+# sudo -i  to become root user
+# nginx -v  to check version
+# curl ifconfig.me  to check server public IP & Private IP
+# To see Apache version on a Debian/Ubuntu Linux, run:  apache2 -v
+# For CentOS/RHEL/Fedora Linux server, type command:    httpd -v

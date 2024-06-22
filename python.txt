@@ -1,0 +1,18 @@
+@ pip3 --version
+@ python --version
+@ awscli --version
+@ aws --version
+@ pip3 install awscli
+@ pip3 install boto3
+
+
+
+
+how to upgrade pip in python-
+1- $ python -m pip install --upgrade pip.
+2- $ python -m pip install --upgrade pip.
+3- C:> py -m pip install --upgrade pip.
+
+how to install pip in python-
+
+python -m pip install --upgrade pip
